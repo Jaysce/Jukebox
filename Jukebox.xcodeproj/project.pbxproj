@@ -20,6 +20,7 @@
 		E8F5722E27166E1300C5DF9C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E8F5723127166E1300C5DF9C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E8F5723327166E1300C5DF9C /* Jukebox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Jukebox.entitlements; sourceTree = "<group>"; };
+		E8F5723A271670AE00C5DF9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,8 +54,9 @@
 			isa = PBXGroup;
 			children = (
 				E8F5722A27166E0D00C5DF9C /* JukeboxApp.swift */,
-				E8F5722C27166E0D00C5DF9C /* ContentView.swift */,
+				E8F5723927166E2400C5DF9C /* Views */,
 				E8F5722E27166E1300C5DF9C /* Assets.xcassets */,
+				E8F5723A271670AE00C5DF9C /* Info.plist */,
 				E8F5723327166E1300C5DF9C /* Jukebox.entitlements */,
 				E8F5723027166E1300C5DF9C /* Preview Content */,
 			);
@@ -67,6 +69,14 @@
 				E8F5723127166E1300C5DF9C /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E8F5723927166E2400C5DF9C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E8F5722C27166E0D00C5DF9C /* ContentView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,6 +286,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Jukebox/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -304,6 +315,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Jukebox/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
