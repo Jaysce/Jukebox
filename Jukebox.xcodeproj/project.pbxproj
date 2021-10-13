@@ -15,7 +15,23 @@
 		E8F572402716785700C5DF9C /* ChipStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F5723F2716785700C5DF9C /* ChipStyle.swift */; };
 		E8F57242271678C800C5DF9C /* PressButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F57241271678C800C5DF9C /* PressButtonStyle.swift */; };
 		E8F5724527167CAF00C5DF9C /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F5724427167CAF00C5DF9C /* Track.swift */; };
+		E8F5724B2716888D00C5DF9C /* MediaRemote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F5724A2716888D00C5DF9C /* MediaRemote.framework */; };
+		E8F5724C2716888D00C5DF9C /* MediaRemote.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E8F5724A2716888D00C5DF9C /* MediaRemote.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E8F5724D2716888D00C5DF9C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E8F5724C2716888D00C5DF9C /* MediaRemote.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		E8F5722727166E0D00C5DF9C /* Jukebox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jukebox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -29,6 +45,8 @@
 		E8F5723F2716785700C5DF9C /* ChipStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipStyle.swift; sourceTree = "<group>"; };
 		E8F57241271678C800C5DF9C /* PressButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressButtonStyle.swift; sourceTree = "<group>"; };
 		E8F5724427167CAF00C5DF9C /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		E8F572482716865F00C5DF9C /* Jukebox-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jukebox-Bridging-Header.h"; sourceTree = "<group>"; };
+		E8F5724A2716888D00C5DF9C /* MediaRemote.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaRemote.framework; path = ../../../../../System/Library/PrivateFrameworks/MediaRemote.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8F5724B2716888D00C5DF9C /* MediaRemote.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +66,7 @@
 			children = (
 				E8F5722927166E0D00C5DF9C /* Jukebox */,
 				E8F5722827166E0D00C5DF9C /* Products */,
+				E8F572492716888C00C5DF9C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +86,7 @@
 				E8F5723B271675EF00C5DF9C /* ViewModels */,
 				E8F5724327167CA400C5DF9C /* Models */,
 				E8F5723E2716784800C5DF9C /* Styles */,
+				E8F57247271685EF00C5DF9C /* Utilities */,
 				E8F5722E27166E1300C5DF9C /* Assets.xcassets */,
 				E8F5723A271670AE00C5DF9C /* Info.plist */,
 				E8F5723327166E1300C5DF9C /* Jukebox.entitlements */,
@@ -115,6 +136,22 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		E8F57247271685EF00C5DF9C /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				E8F572482716865F00C5DF9C /* Jukebox-Bridging-Header.h */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		E8F572492716888C00C5DF9C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E8F5724A2716888D00C5DF9C /* MediaRemote.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -125,6 +162,7 @@
 				E8F5722327166E0D00C5DF9C /* Sources */,
 				E8F5722427166E0D00C5DF9C /* Frameworks */,
 				E8F5722527166E0D00C5DF9C /* Resources */,
+				E8F5724D2716888D00C5DF9C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -254,6 +292,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "Jukebox/Utilities/Jukebox-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -308,6 +347,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "Jukebox/Utilities/Jukebox-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
@@ -338,6 +378,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 			};
 			name = Debug;
 		};
@@ -367,6 +411,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 			};
 			name = Release;
 		};
