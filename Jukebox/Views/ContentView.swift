@@ -17,27 +17,34 @@ struct ContentView: View {
         
         ZStack {
             // TODO: Visualizer View
+            Color.gray
             
             VStack(spacing: 16) {
-                
                 // Media details
                 HStack {
-                    // TODO: Replace with album art image
-                    Rectangle()
-                        .foregroundColor(.white.opacity(0.2))
-                        .frame(width: 80, height: 80)
-                        .cornerRadius(8)
+                    // Album art image
+                    ZStack {
+                        Rectangle()
+                            .foregroundColor(.white.opacity(0.2))
+                            .frame(width: 80, height: 80)
+                            .cornerRadius(8)
+                        
+                        Image(nsImage: contentViewVM.track.albumArt)
+                            .resizable()
+                            .frame(width: 80, height: 80)
+                            .cornerRadius(8)
+                    }
                     
                     // Track details
                     VStack(alignment: .leading) {
-                        Text("Track Title")
+                        Text(contentViewVM.track.title)
                             .foregroundColor(.white).opacity(0.8)
                             .font(.system(size: 20, weight: .bold))
                             .lineLimit(1)
-                        Text("Artist")
+                        Text(contentViewVM.track.artist)
                             .font(.headline)
                             .lineLimit(1)
-                            .foregroundColor(.secondary).opacity(0.8)
+                            .foregroundColor(.white).opacity(0.4)
                         
                         Spacer()
                         
@@ -79,7 +86,7 @@ struct ContentView: View {
                     Button {
                         // Play / Pause track
                     } label: {
-                        Image(systemName: "play.fill")
+                        Image(systemName: contentViewVM.isPlaying ? "pause.fill" : "play.fill")
                             .font(.system(size: 30))
                             .foregroundColor(.white).opacity(0.8)
                             .frame(width: 32, height: 32)
@@ -98,6 +105,7 @@ struct ContentView: View {
             }
             .padding()
         }
+        .onAppear(perform: contentViewVM.getTrackInformation)
     }
     
 }
