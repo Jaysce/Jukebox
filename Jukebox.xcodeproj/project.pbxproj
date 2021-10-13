@@ -11,6 +11,9 @@
 		E8F5722D27166E0D00C5DF9C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F5722C27166E0D00C5DF9C /* ContentView.swift */; };
 		E8F5722F27166E1300C5DF9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8F5722E27166E1300C5DF9C /* Assets.xcassets */; };
 		E8F5723227166E1300C5DF9C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8F5723127166E1300C5DF9C /* Preview Assets.xcassets */; };
+		E8F5723D2716760E00C5DF9C /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F5723C2716760E00C5DF9C /* ContentViewModel.swift */; };
+		E8F572402716785700C5DF9C /* ChipStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F5723F2716785700C5DF9C /* ChipStyle.swift */; };
+		E8F57242271678C800C5DF9C /* PressButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F57241271678C800C5DF9C /* PressButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +24,9 @@
 		E8F5723127166E1300C5DF9C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E8F5723327166E1300C5DF9C /* Jukebox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Jukebox.entitlements; sourceTree = "<group>"; };
 		E8F5723A271670AE00C5DF9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E8F5723C2716760E00C5DF9C /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		E8F5723F2716785700C5DF9C /* ChipStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipStyle.swift; sourceTree = "<group>"; };
+		E8F57241271678C800C5DF9C /* PressButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +61,8 @@
 			children = (
 				E8F5722A27166E0D00C5DF9C /* JukeboxApp.swift */,
 				E8F5723927166E2400C5DF9C /* Views */,
+				E8F5723B271675EF00C5DF9C /* ViewModels */,
+				E8F5723E2716784800C5DF9C /* Styles */,
 				E8F5722E27166E1300C5DF9C /* Assets.xcassets */,
 				E8F5723A271670AE00C5DF9C /* Info.plist */,
 				E8F5723327166E1300C5DF9C /* Jukebox.entitlements */,
@@ -77,6 +85,23 @@
 				E8F5722C27166E0D00C5DF9C /* ContentView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E8F5723B271675EF00C5DF9C /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E8F5723C2716760E00C5DF9C /* ContentViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E8F5723E2716784800C5DF9C /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				E8F5723F2716785700C5DF9C /* ChipStyle.swift */,
+				E8F57241271678C800C5DF9C /* PressButtonStyle.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,8 +174,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8F57242271678C800C5DF9C /* PressButtonStyle.swift in Sources */,
 				E8F5722D27166E0D00C5DF9C /* ContentView.swift in Sources */,
+				E8F572402716785700C5DF9C /* ChipStyle.swift in Sources */,
 				E8F5722B27166E0D00C5DF9C /* JukeboxApp.swift in Sources */,
+				E8F5723D2716760E00C5DF9C /* ContentViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

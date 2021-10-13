@@ -36,7 +36,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if let statusBarItemButton = statusBarItem.button {
             
             // Change Status Bar Button title String attributes
-            let trackDetails = "Song Title • Artist"
+            let trackDetails = "Track Title • Artist"
             let attributes = [ NSAttributedString.Key.font: NSFont.systemFont(ofSize: 12) ]
             let attributedString = NSAttributedString(string: trackDetails, attributes: attributes)
             statusBarItemButton.attributedTitle = attributedString
