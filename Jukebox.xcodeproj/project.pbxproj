@@ -14,6 +14,7 @@
 		E8F5723D2716760E00C5DF9C /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F5723C2716760E00C5DF9C /* ContentViewModel.swift */; };
 		E8F572402716785700C5DF9C /* ChipStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F5723F2716785700C5DF9C /* ChipStyle.swift */; };
 		E8F57242271678C800C5DF9C /* PressButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F57241271678C800C5DF9C /* PressButtonStyle.swift */; };
+		E8F5724527167CAF00C5DF9C /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F5724427167CAF00C5DF9C /* Track.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		E8F5723C2716760E00C5DF9C /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		E8F5723F2716785700C5DF9C /* ChipStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipStyle.swift; sourceTree = "<group>"; };
 		E8F57241271678C800C5DF9C /* PressButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressButtonStyle.swift; sourceTree = "<group>"; };
+		E8F5724427167CAF00C5DF9C /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				E8F5722A27166E0D00C5DF9C /* JukeboxApp.swift */,
 				E8F5723927166E2400C5DF9C /* Views */,
 				E8F5723B271675EF00C5DF9C /* ViewModels */,
+				E8F5724327167CA400C5DF9C /* Models */,
 				E8F5723E2716784800C5DF9C /* Styles */,
 				E8F5722E27166E1300C5DF9C /* Assets.xcassets */,
 				E8F5723A271670AE00C5DF9C /* Info.plist */,
@@ -102,6 +105,14 @@
 				E8F57241271678C800C5DF9C /* PressButtonStyle.swift */,
 			);
 			path = Styles;
+			sourceTree = "<group>";
+		};
+		E8F5724327167CA400C5DF9C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E8F5724427167CAF00C5DF9C /* Track.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,6 +190,7 @@
 				E8F572402716785700C5DF9C /* ChipStyle.swift in Sources */,
 				E8F5722B27166E0D00C5DF9C /* JukeboxApp.swift in Sources */,
 				E8F5723D2716760E00C5DF9C /* ContentViewModel.swift in Sources */,
+				E8F5724527167CAF00C5DF9C /* Track.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
