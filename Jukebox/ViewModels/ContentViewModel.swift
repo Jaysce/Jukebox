@@ -85,4 +85,17 @@ class ContentViewModel: ObservableObject {
             self.track.albumArt = NSImage(data: albumArtData ?? Data()) ?? NSImage()
         }
     }
+    
+    func togglePlayPause() {
+        MRMediaRemoteSendCommand(kMRTogglePlayPause, nil)
+    }
+    
+    func previousTrack() {
+        MRMediaRemoteSendCommand(kMRPreviousTrack, nil)
+    }
+    
+    func nextTrack() {
+        MRMediaRemoteSendCommand(kMRNextTrack, nil)
+    }
+    
 }

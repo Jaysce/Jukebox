@@ -51,8 +51,13 @@ struct ContentView: View {
                         // Linked App and Lyrics
                         HStack(spacing: 4) {
                             // TODO: Make adaptive to current application
-                            Image(systemName: "link")
-                                .chipStyle()
+                            Button {
+                                // Ability to switch active music apps
+                            } label: {
+                                Image(systemName: "link")
+                                    .chipStyle()
+                            }
+                            .pressButtonStyle()
                             
                             // TODO: Lyrics, this button should only appear when lyrics available
                             Button {
@@ -72,10 +77,10 @@ struct ContentView: View {
                 // TODO: Seeker
                 Slider(value: $value)
                 
-                // Media Buttons
+                // Playback Buttons
                 HStack(spacing: 24) {
                     Button {
-                        // Previous track
+                        contentViewVM.previousTrack()
                     } label: {
                         Image(systemName: "backward.fill")
                             .font(.system(size: 20))
@@ -84,7 +89,7 @@ struct ContentView: View {
                     .pressButtonStyle()
 
                     Button {
-                        // Play / Pause track
+                        contentViewVM.togglePlayPause()
                     } label: {
                         Image(systemName: contentViewVM.isPlaying ? "pause.fill" : "play.fill")
                             .font(.system(size: 30))
@@ -94,7 +99,7 @@ struct ContentView: View {
                     .pressButtonStyle()
                     
                     Button {
-                        // Next track
+                        contentViewVM.nextTrack()
                     } label: {
                         Image(systemName: "forward.fill")
                             .font(.system(size: 20))
