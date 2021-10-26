@@ -59,10 +59,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             popover.performClose(sender)
         } else {
             popover.show(relativeTo: statusBarItemButton.bounds, of: statusBarItemButton, preferredEdge: .minY)
-            
-            // Removes the arrow of popover
-            // TODO: Bounds continuously added on, might need to fix this later
-            statusBarItemButton.bounds = statusBarItemButton.bounds.offsetBy(dx: 0, dy: statusBarItemButton.bounds.height)
         }
         
     }
