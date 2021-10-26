@@ -46,7 +46,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             
         }
         
-        // TODO: Add observer to listen to when track changes to update the title in the menu bar
+        // Add observer to listen to when track changes to update the title in the menu bar
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateStatusBarItemTitle),
+            name: NSNotification.Name("TrackChanged"),
+            object: nil)
         
     }
     
@@ -63,7 +68,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         
     }
     
-    // TODO: Function to update the track details of the Menu Bar Item
+    @objc func updateStatusBarItemTitle(_ notification: NSNotification) {
+
+        // Get track data from notification
+        guard let trackTitle = notification.userInfo?["title"] else { return }
+        guard let trackArtist = notification.userInfo?["artist"] else { return }
+
+        // Set the title of the Status Bar Item
+        if let statusBarItemButton = statusBarItem.button {
+            statusBarItemButton.title = "\(trackTitle) • \(trackArtist)"
+        }
+        
+    }
     
 }
 

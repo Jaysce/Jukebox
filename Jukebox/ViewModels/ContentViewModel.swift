@@ -85,8 +85,11 @@ class ContentViewModel: ObservableObject {
     }
     
     func getTrackInformation() {
+        
         print("Getting track information...")
+        
         MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main) { [weak self] trackInformation in
+            
             guard let self = self else { return }
             guard let trackInformation = trackInformation as? [String: AnyObject] else { return }
             
@@ -100,7 +103,13 @@ class ContentViewModel: ObservableObject {
             self.trackDuration = trackInformation["kMRMediaRemoteNowPlayingInfoDuration"] as? Double ?? 0
             self.elapsedTime = trackInformation["kMRMediaRemoteNowPlayingInfoElapsedTime"] as? Double ?? 0
             self.timestamp = trackInformation["kMRMediaRemoteNowPlayingInfoTimestamp"] as? Date ?? Date()
+            
+            // Post notification to update the menu bar track title
+            let trackInfo: [String: String] = ["title": self.track.title, "artist": self.track.artist]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "TrackChanged"), object: nil, userInfo: trackInfo)
+            
         }
+        
     }
     
     func togglePlayPause() {
