@@ -74,8 +74,14 @@ struct ContentView: View {
                     Spacer()
                 }
                 
-                // TODO: Seeker
-                Slider(value: $value)
+                Seeker(trackDuration: contentViewVM.trackDuration, seekerPosition: $contentViewVM.seekerPosition) { isDragging in
+                    if (!isDragging) {
+                        contentViewVM.seekTrack()
+                        contentViewVM.timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+                    } else {
+                        contentViewVM.timer.upstream.connect().cancel()
+                    }
+                }
                 
                 // Playback Buttons
                 HStack(spacing: 24) {
@@ -111,6 +117,9 @@ struct ContentView: View {
             .padding()
         }
         .onAppear(perform: contentViewVM.getTrackInformation)
+        .onReceive(contentViewVM.timer) { _ in
+            contentViewVM.getCurrentSeekerPosition()
+        }
     }
     
 }
