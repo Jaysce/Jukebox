@@ -11,7 +11,7 @@ struct ContentView: View {
     
     @ObservedObject var contentViewVM = ContentViewModel()
     
-    @State var value = 5.0
+    @State private var showingLyrics = false
     
     var body: some View {
         
@@ -62,6 +62,7 @@ struct ContentView: View {
                             // TODO: Lyrics, this button should only appear when lyrics available
                             Button {
                                 // Show lyrics for the current track
+                                showingLyrics = true
                             } label: {
                                 Image(systemName: "quote.bubble.fill")
                                     .chipStyle()
@@ -115,6 +116,10 @@ struct ContentView: View {
                 }
             }
             .padding()
+            .opacity(showingLyrics ? 0 : 1)
+            
+            LyricsView(showingLyrics: $showingLyrics)
+                .opacity(showingLyrics ? 1 : 0)
         }
         .onAppear(perform: contentViewVM.getTrackInformation)
         .onReceive(contentViewVM.timer) { _ in
