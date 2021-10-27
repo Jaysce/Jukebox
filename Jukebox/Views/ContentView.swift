@@ -9,9 +9,13 @@ import SwiftUI
 
 struct ContentView: View {
     
+    // View Model
     @ObservedObject var contentViewVM = ContentViewModel()
     
+    // States for animations
     @State private var showingLyrics = false
+    @State private var playbackScale = 1.0
+    @State private var lyricsScale = 1.2
     
     var body: some View {
         
@@ -61,8 +65,9 @@ struct ContentView: View {
                             
                             // TODO: Lyrics, this button should only appear when lyrics available
                             Button {
-                                // Show lyrics for the current track
                                 showingLyrics = true
+                                playbackScale = 0.8
+                                lyricsScale = 1
                             } label: {
                                 Image(systemName: "quote.bubble.fill")
                                     .chipStyle()
@@ -117,9 +122,15 @@ struct ContentView: View {
             }
             .padding()
             .opacity(showingLyrics ? 0 : 1)
+            .scaleEffect(playbackScale)
+            .animation(.timingCurve(0.12,0.76,0.44,0.99), value: playbackScale)
+            .animation(.timingCurve(0.12,0.76,0.44,0.99), value: showingLyrics)
             
-            LyricsView(showingLyrics: $showingLyrics)
+            LyricsView(showingLyrics: $showingLyrics, playbackScale: $playbackScale, lyricsScale: $lyricsScale)
                 .opacity(showingLyrics ? 1 : 0)
+                .scaleEffect(lyricsScale)
+                .animation(.timingCurve(0.12,0.76,0.44,0.99), value: lyricsScale)
+                .animation(.timingCurve(0.12,0.76,0.44,0.99), value: showingLyrics)
         }
         .onAppear(perform: contentViewVM.getTrackInformation)
         .onReceive(contentViewVM.timer) { _ in
