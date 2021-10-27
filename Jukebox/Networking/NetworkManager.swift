@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+class NetworkManager {
+    
+    static var shared: NetworkManager = {
+        return NetworkManager()
+    }()
+    
+    private init() {}
+    
+    // TODO: API Calls
+    
+}
