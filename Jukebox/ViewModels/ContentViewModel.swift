@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import PromiseKit
 
 class ContentViewModel: ObservableObject {
     
@@ -21,11 +22,16 @@ class ContentViewModel: ObservableObject {
     private var elapsedTime = 0.0
     private var timestamp: Date?
     
+    // Lyrics
+    private var accessToken: String?
+    private var accessTokenExpiryDate: Date?
+    
     init() {
         setupObservers()
         getPlayState()
         getTrackInformation()
         getCurrentSeekerPosition()
+        fetchLyrics()
     }
     
     // MARK: - Observers
@@ -63,7 +69,7 @@ class ContentViewModel: ObservableObject {
     @objc private func trackDidChange() {
         print("The currently playing track changed")
         getTrackInformation()
-        // TODO: Fetch lyrics on track change
+        fetchLyrics()
     }
     
     @objc private func playStateDidChange() {
@@ -137,6 +143,59 @@ class ContentViewModel: ObservableObject {
     
     func seekTrack() {
         MRMediaRemoteSetElapsedTime(seekerPosition)
+    }
+    
+    // MARK: - Lyrics
+    
+    private func fetchAccessToken() {
+        
+        print("Fetching Access Token...")
+        
+        let networkManager = NetworkManager.shared
+        
+        firstly {
+            networkManager.getSpotifyAccessToken()
+        }.done { [weak self] tokenInfo in
+            self?.accessToken = tokenInfo.accessToken
+            self?.accessTokenExpiryDate = Date().addingTimeInterval(TimeInterval(tokenInfo.expiresIn))
+            self?.fetchLyrics()
+        }.catch { [weak self] error in
+            print(error.localizedDescription)
+            self?.track.lyrics = "Something went wrong..."
+        }
+        
+    }
+    
+    private func fetchLyrics() {
+        
+        let networkManager = NetworkManager.shared
+        
+        // If access token or access token expiry is nil, fetch access token
+        guard let accessToken = accessToken, let expiryDate = accessTokenExpiryDate else {
+            fetchAccessToken()
+            return
+        }
+        
+        // If access token is expired, fetch access token
+        guard Date() < expiryDate else {
+            fetchAccessToken()
+            return
+        }
+        
+        print("Fetching Lyrics...")
+        
+        // Fetch the lyrics for the currently playing song
+        firstly { [weak self] in
+            networkManager.getISRC(for: self!.track, using: accessToken)
+        }.then { isrc in
+            networkManager.getLyricsForTrack(with: isrc)
+        }.done { [weak self] musixMatchLyrics in
+            self?.track.lyrics = musixMatchLyrics.getLyrics() ?? "No lyrics for current song..."
+        }.catch { [weak self] error in
+            print(error.localizedDescription)
+            self?.track.lyrics = "No lyrics for current song..."
+        }
+        
     }
     
 }

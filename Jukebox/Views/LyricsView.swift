@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LyricsView: View {
     
+    let lyrics: String
     @Binding var showingLyrics: Bool
     @Binding var playbackScale: Double
     @Binding var lyricsScale: Double
@@ -31,7 +32,7 @@ struct LyricsView: View {
                 Spacer()
             }
             VStack(alignment: .center) {
-                Text("Lyrics for the track...")
+                Text(lyrics)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white.opacity(0.8))
                     .font(.system(size: 20, weight: .bold))

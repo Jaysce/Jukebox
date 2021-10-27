@@ -35,6 +35,7 @@ struct ContentView: View {
                         
                         Image(nsImage: contentViewVM.track.albumArt)
                             .resizable()
+                            .scaledToFill()
                             .frame(width: 80, height: 80)
                             .cornerRadius(8)
                     }
@@ -126,7 +127,7 @@ struct ContentView: View {
             .animation(.timingCurve(0.12,0.76,0.44,0.99), value: playbackScale)
             .animation(.timingCurve(0.12,0.76,0.44,0.99), value: showingLyrics)
             
-            LyricsView(showingLyrics: $showingLyrics, playbackScale: $playbackScale, lyricsScale: $lyricsScale)
+            LyricsView(lyrics: contentViewVM.track.lyrics, showingLyrics: $showingLyrics, playbackScale: $playbackScale, lyricsScale: $lyricsScale)
                 .opacity(showingLyrics ? 1 : 0)
                 .scaleEffect(lyricsScale)
                 .animation(.timingCurve(0.12,0.76,0.44,0.99), value: lyricsScale)
