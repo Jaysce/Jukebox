@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     // View Model
-    @ObservedObject var contentViewVM = ContentViewModel()
+    @StateObject var contentViewVM = ContentViewModel()
     
     // States for animations
     @State private var showingLyrics = false
@@ -66,9 +66,9 @@ struct ContentView: View {
                             
                             // TODO: Lyrics, this button should only appear when lyrics available
                             Button {
-                                showingLyrics = true
-                                playbackScale = 0.8
-                                lyricsScale = 1
+                                self.showingLyrics = true
+                                self.playbackScale = 0.8
+                                self.lyricsScale = 1
                             } label: {
                                 Image(systemName: "quote.bubble.fill")
                                     .chipStyle()
@@ -82,11 +82,11 @@ struct ContentView: View {
                 }
                 
                 Seeker(trackDuration: contentViewVM.trackDuration, seekerPosition: $contentViewVM.seekerPosition) { isDragging in
-                    if (!isDragging) {
+                    if (isDragging) {
+                        contentViewVM.timer.upstream.connect().cancel()
+                    } else {
                         contentViewVM.seekTrack()
                         contentViewVM.timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
-                    } else {
-                        contentViewVM.timer.upstream.connect().cancel()
                     }
                 }
                 

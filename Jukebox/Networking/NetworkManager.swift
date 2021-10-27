@@ -8,7 +8,7 @@
 import Foundation
 import PromiseKit
 
-class NetworkManager {
+struct NetworkManager {
     
     static var shared: NetworkManager = {
         return NetworkManager()
