@@ -11,6 +11,9 @@ import PromiseKit
 
 class ContentViewModel: ObservableObject {
     
+    // Popover
+    @Published var popoverIsShown = true
+    
     // Track
     @Published var track = Track()
     @Published var isPlaying = false
@@ -66,7 +69,7 @@ class ContentViewModel: ObservableObject {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(popoverIsOpening),
-            name: NSPopover.didShowNotification,
+            name: NSPopover.willShowNotification,
             object: nil)
         
         // Add observer to listen for popover close
@@ -171,10 +174,12 @@ class ContentViewModel: ObservableObject {
     
     @objc private func popoverIsOpening(_ notification: NSNotification) {
         startTimer()
+        popoverIsShown = true
     }
     
     @objc private func popoverIsClosing(_ notification: NSNotification) {
         pauseTimer()
+        popoverIsShown = false
     }
     
     // MARK: - Lyrics

@@ -13,6 +13,8 @@
 		E84A173B2728EAC3005F8CB4 /* LyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84A173A2728EAC3005F8CB4 /* LyricsView.swift */; };
 		E84A173D2728F490005F8CB4 /* SpotifyClientCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84A173C2728F490005F8CB4 /* SpotifyClientCredentials.swift */; };
 		E84A173F2728F4CB005F8CB4 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84A173E2728F4CB005F8CB4 /* NetworkError.swift */; };
+		E8A013DD272AB20900B25B63 /* Gradient.metal in Sources */ = {isa = PBXBuildFile; fileRef = E8A013DC272AB20900B25B63 /* Gradient.metal */; };
+		E8A013DF272AB23500B25B63 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A013DE272AB23500B25B63 /* MetalView.swift */; };
 		E8AF5FC027290DEF00AACF65 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = E8AF5FBF27290DEF00AACF65 /* Secrets.plist */; };
 		E8AF5FC327290EFB00AACF65 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AF5FC227290EFB00AACF65 /* Secrets.swift */; };
 		E8AF5FC5272924AC00AACF65 /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AF5FC4272924AC00AACF65 /* String+Base64.swift */; };
@@ -50,6 +52,8 @@
 		E84A173A2728EAC3005F8CB4 /* LyricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsView.swift; sourceTree = "<group>"; };
 		E84A173C2728F490005F8CB4 /* SpotifyClientCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyClientCredentials.swift; sourceTree = "<group>"; };
 		E84A173E2728F4CB005F8CB4 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		E8A013DC272AB20900B25B63 /* Gradient.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Gradient.metal; sourceTree = "<group>"; };
+		E8A013DE272AB23500B25B63 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		E8AF5FBF27290DEF00AACF65 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		E8AF5FC227290EFB00AACF65 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		E8AF5FC4272924AC00AACF65 /* String+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Base64.swift"; sourceTree = "<group>"; };
@@ -103,6 +107,14 @@
 			path = ResponseModels;
 			sourceTree = "<group>";
 		};
+		E8A013DB272AB1D900B25B63 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				E8A013DC272AB20900B25B63 /* Gradient.metal */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
 		E8F5721E27166E0D00C5DF9C = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +140,7 @@
 				E8F5723B271675EF00C5DF9C /* ViewModels */,
 				E8F5724327167CA400C5DF9C /* Models */,
 				E80E4CB627281274000F9D74 /* Networking */,
+				E8A013DB272AB1D900B25B63 /* Shaders */,
 				E8F5723E2716784800C5DF9C /* Styles */,
 				E8F57247271685EF00C5DF9C /* Utilities */,
 				E8F5722E27166E1300C5DF9C /* Assets.xcassets */,
@@ -151,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				E8F5722C27166E0D00C5DF9C /* ContentView.swift */,
+				E8A013DE272AB23500B25B63 /* MetalView.swift */,
 				E80E4CB42727F763000F9D74 /* Seeker.swift */,
 				E84A173A2728EAC3005F8CB4 /* LyricsView.swift */,
 			);
@@ -291,6 +305,8 @@
 				E8AF5FC9272927B800AACF65 /* MusixMatchLyrics.swift in Sources */,
 				E8AF5FC5272924AC00AACF65 /* String+Base64.swift in Sources */,
 				E8AF5FC72729278F00AACF65 /* SpotifySearchResult.swift in Sources */,
+				E8A013DD272AB20900B25B63 /* Gradient.metal in Sources */,
+				E8A013DF272AB23500B25B63 /* MetalView.swift in Sources */,
 				E84A173F2728F4CB005F8CB4 /* NetworkError.swift in Sources */,
 				E8F5724527167CAF00C5DF9C /* Track.swift in Sources */,
 			);

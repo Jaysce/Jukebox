@@ -21,7 +21,7 @@ struct ContentView: View {
         
         ZStack {
             // TODO: Visualizer View
-            Color.gray
+            MetalView(popoverIsShown: contentViewVM.popoverIsShown).padding(-80)
             
             VStack(spacing: 16) {
                 // Media details
