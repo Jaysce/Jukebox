@@ -62,6 +62,20 @@ class ContentViewModel: ObservableObject {
             name: NSNotification.Name("kMRMediaRemoteNowPlayingApplicationDidChangeNotification"),
             object: nil)
         
+        // Add observer to listen for popover open
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(popoverIsOpening),
+            name: NSPopover.didShowNotification,
+            object: nil)
+        
+        // Add observer to listen for popover close
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(popoverIsClosing),
+            name: NSPopover.didCloseNotification,
+            object: nil)
+        
     }
     
     // MARK: - MR Notification Handlers
@@ -130,6 +144,8 @@ class ContentViewModel: ObservableObject {
         MRMediaRemoteSendCommand(kMRNextTrack, nil)
     }
     
+    // MARK: - Seeker
+    
     func getCurrentSeekerPosition() {
         guard let timestamp = timestamp else { return }
         if (isPlaying) {
@@ -143,6 +159,22 @@ class ContentViewModel: ObservableObject {
     
     func seekTrack() {
         MRMediaRemoteSetElapsedTime(seekerPosition)
+    }
+    
+    func startTimer() {
+        timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    }
+    
+    func pauseTimer() {
+        timer.upstream.connect().cancel()
+    }
+    
+    @objc private func popoverIsOpening(_ notification: NSNotification) {
+        startTimer()
+    }
+    
+    @objc private func popoverIsClosing(_ notification: NSNotification) {
+        pauseTimer()
     }
     
     // MARK: - Lyrics

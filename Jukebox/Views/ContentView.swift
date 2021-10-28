@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     // View Model
-    @StateObject var contentViewVM = ContentViewModel()
+    @ObservedObject var contentViewVM: ContentViewModel
     
     // States for animations
     @State private var showingLyrics = false
@@ -83,10 +83,10 @@ struct ContentView: View {
                 
                 Seeker(trackDuration: contentViewVM.trackDuration, seekerPosition: $contentViewVM.seekerPosition) { isDragging in
                     if (isDragging) {
-                        contentViewVM.timer.upstream.connect().cancel()
+                        contentViewVM.pauseTimer()
                     } else {
                         contentViewVM.seekTrack()
-                        contentViewVM.timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+                        contentViewVM.startTimer()
                     }
                 }
                 

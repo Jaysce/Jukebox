@@ -17,7 +17,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let frameSize = NSSize(width: 400, height: 200)
         
         // Initialize ContentView
-        let hostedContentView = NSHostingView(rootView: ContentView())
+        @StateObject var contentViewVM = ContentViewModel()
+        let hostedContentView = NSHostingView(rootView: ContentView(contentViewVM: contentViewVM))
         hostedContentView.frame = NSRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
         
         // Initialize Popover
