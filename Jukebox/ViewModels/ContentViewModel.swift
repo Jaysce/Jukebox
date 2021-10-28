@@ -101,8 +101,7 @@ class ContentViewModel: ObservableObject {
     // MARK: - Media & Playback
     
     private func getPlayState() {
-        MRMediaRemoteGetNowPlayingApplicationIsPlaying(DispatchQueue.main) { [weak self] isPlaying in
-            guard let self = self else { return }
+        MRMediaRemoteGetNowPlayingApplicationIsPlaying(DispatchQueue.main) { isPlaying in
             self.isPlaying = isPlaying
         }
     }
@@ -111,9 +110,8 @@ class ContentViewModel: ObservableObject {
         
         print("Getting track information...")
         
-        MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main) { [weak self] trackInformation in
+        MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main) { trackInformation in
             
-            guard let self = self else { return }
             guard let trackInformation = trackInformation as? [String: AnyObject] else { return }
             
             // Track
@@ -192,13 +190,13 @@ class ContentViewModel: ObservableObject {
         
         firstly {
             networkManager.getSpotifyAccessToken()
-        }.done { [weak self] tokenInfo in
-            self?.accessToken = tokenInfo.accessToken
-            self?.accessTokenExpiryDate = Date().addingTimeInterval(TimeInterval(tokenInfo.expiresIn))
-            self?.fetchLyrics()
-        }.catch { [weak self] error in
+        }.done { tokenInfo in
+            self.accessToken = tokenInfo.accessToken
+            self.accessTokenExpiryDate = Date().addingTimeInterval(TimeInterval(tokenInfo.expiresIn))
+            self.fetchLyrics()
+        }.catch { error in
             print(error.localizedDescription)
-            self?.track.lyrics = "Something went wrong..."
+            self.track.lyrics = "Something went wrong..."
         }
         
     }
@@ -222,15 +220,15 @@ class ContentViewModel: ObservableObject {
         print("Fetching Lyrics...")
         
         // Fetch the lyrics for the currently playing song
-        firstly { [weak self] in
-            networkManager.getISRC(for: self!.track, using: accessToken)
+        firstly {
+            networkManager.getISRC(for: track, using: accessToken)
         }.then { isrc in
             networkManager.getLyricsForTrack(with: isrc)
-        }.done { [weak self] musixMatchLyrics in
-            self?.track.lyrics = musixMatchLyrics.getLyrics() ?? "No lyrics for current song..."
-        }.catch { [weak self] error in
+        }.done { musixMatchLyrics in
+            self.track.lyrics = musixMatchLyrics.getLyrics() ?? "No lyrics for current song..."
+        }.catch { error in
             print(error.localizedDescription)
-            self?.track.lyrics = "No lyrics for current song..."
+            self.track.lyrics = "No lyrics for current song..."
         }
         
     }
