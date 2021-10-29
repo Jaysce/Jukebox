@@ -7,10 +7,12 @@
 
 import SwiftUI
 
-final class AppDelegate: NSObject, NSApplicationDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     private var statusBarItem: NSStatusItem!
+    private var statusBarMenu: NSMenu!
     private var popover: NSPopover!
+    private var preferencesWindow: PreferencesWindow!
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         
@@ -30,6 +32,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         popover.contentViewController?.view = hostedContentView
         popover.contentViewController?.view.window?.makeKey()
         
+        // Initialize Status Bar Menu
+        statusBarMenu = NSMenu()
+        statusBarMenu.delegate = self
+        statusBarMenu.addItem(
+            withTitle: "Preferences...",
+            action: #selector(openPreferencesWindow),
+            keyEquivalent: "")
+        statusBarMenu.addItem(NSMenuItem.separator())
+        statusBarMenu.addItem(
+            withTitle: "Quit Jukebox",
+            action: #selector(NSApplication.terminate),
+            keyEquivalent: "")
+        
         // Initialize Status Bar Item
         statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
@@ -43,7 +58,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             statusBarItemButton.attributedTitle = attributedString
             
             // Set Status Bar Item Button click action
-            statusBarItemButton.action = #selector(togglePopover)
+            statusBarItemButton.action = #selector(didClickStatusBarItem)
+            statusBarItemButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
             
         }
         
@@ -56,13 +72,33 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         
     }
     
-    // Toggle open and close of popover
-    @objc func togglePopover(_ sender: AnyObject?) {
+    // Handle left or right click of Status Bar Item
+    @objc func didClickStatusBarItem(_ sender: AnyObject?) {
+
+        guard let event = NSApp.currentEvent else { return }
         
-        guard let statusBarItemButton = sender as? NSStatusBarButton else { return }
+        switch event.type {
+        case .rightMouseUp:
+            statusBarItem.menu = statusBarMenu
+            statusBarItem.button?.performClick(nil)
+            
+        default:
+            togglePopover(statusBarItem.button)
+        }
+        
+    }
+    
+    func menuDidClose(_: NSMenu) {
+        statusBarItem.menu = nil
+    }
+    
+    // Toggle open and close of popover
+    @objc func togglePopover(_ sender: NSStatusBarButton?) {
+        
+        guard let statusBarItemButton = sender else { return }
         
         if popover.isShown {
-            popover.performClose(sender)
+            popover.performClose(statusBarItemButton)
         } else {
             popover.show(relativeTo: statusBarItemButton.bounds, of: statusBarItemButton, preferredEdge: .minY)
         }
@@ -79,6 +115,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if let statusBarItemButton = statusBarItem.button {
             statusBarItemButton.title = "\(trackTitle) • \(trackArtist)"
         }
+        
+    }
+    
+    @objc func openPreferencesWindow(_ sender: AnyObject?) {
+        
+        if preferencesWindow == nil {
+            preferencesWindow = PreferencesWindow()
+            preferencesWindow.contentView = NSHostingView(rootView: PreferencesView())
+        }
+        
+        preferencesWindow.center()
+        preferencesWindow.makeKeyAndOrderFront(nil)
         
     }
     
