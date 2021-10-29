@@ -101,6 +101,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             popover.performClose(statusBarItemButton)
         } else {
             popover.show(relativeTo: statusBarItemButton.bounds, of: statusBarItemButton, preferredEdge: .minY)
+            NSApplication.shared.activate(ignoringOtherApps: true)
         }
         
     }
@@ -122,11 +123,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         if preferencesWindow == nil {
             preferencesWindow = PreferencesWindow()
-            preferencesWindow.contentView = NSHostingView(rootView: PreferencesView())
+            let hostedPrefView = NSHostingView(rootView: PreferencesView(parentWindow: preferencesWindow))
+            preferencesWindow.contentView = hostedPrefView
         }
         
         preferencesWindow.center()
         preferencesWindow.makeKeyAndOrderFront(nil)
+        NSApplication.shared.activate(ignoringOtherApps: true)
         
     }
     

@@ -8,10 +8,35 @@
 import SwiftUI
 
 struct PreferencesView: View {
+    
+    weak var parentWindow: PreferencesWindow!
+    @State private var isHoveringCloseButton = false
+    
     var body: some View {
         HStack(spacing: 0) {
-            VisualEffectView(material: .sidebar, blendingMode: .behindWindow)
-                .frame(maxWidth: 120, maxHeight: .infinity)
+            ZStack {
+                VisualEffectView(material: .sidebar, blendingMode: .behindWindow)
+                VStack {
+                    HStack {
+                        Button {
+                            parentWindow.close()
+                            isHoveringCloseButton = false
+                        } label: {
+                            Image(isHoveringCloseButton ? "close_hover" : "close")
+                        }
+                        .pressButtonStyle()
+                        .onHover(perform: { hovering in
+                            if hovering { isHoveringCloseButton = true }
+                            else { isHoveringCloseButton = false }
+                        })
+                        .padding(12)
+                        Spacer()
+                    }
+                    
+                    Spacer()
+                }
+            }
+            .frame(maxWidth: 120, maxHeight: .infinity)
             
             Divider()
             
@@ -22,10 +47,5 @@ struct PreferencesView: View {
         }
         .ignoresSafeArea()
     }
-}
-
-struct PreferencesView_Previews: PreviewProvider {
-    static var previews: some View {
-        PreferencesView()
-    }
+    
 }

@@ -13,12 +13,12 @@ class PreferencesWindow: NSWindow {
     init() {
         super.init(
             contentRect: NSRect(x: 0, y: 0, width: 500, height: 300),
-            styleMask: [.titled, .closable, .miniaturizable, .fullSizeContentView],
+            styleMask: [.titled, .fullSizeContentView],
             backing: .buffered,
             defer: false)
         
         self.titlebarAppearsTransparent = true
-        self.level = .floating
+        self.isMovableByWindowBackground = true
         self.isReleasedWhenClosed = false
     }
     
