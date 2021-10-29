@@ -14,6 +14,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var popover: NSPopover!
     private var preferencesWindow: PreferencesWindow!
     
+    // MARK: - On Finish Launch
+    
     func applicationDidFinishLaunching(_ notification: Notification) {
         
         let frameSize = NSSize(width: 400, height: 200)
@@ -35,11 +37,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // Initialize Status Bar Menu
         statusBarMenu = NSMenu()
         statusBarMenu.delegate = self
+        let hostedAboutView = NSHostingView(rootView: AboutView())
+        hostedAboutView.frame = NSRect(x: 0, y: 0, width: 220, height: 70)
+        let aboutMenuItem = NSMenuItem()
+        aboutMenuItem.view = hostedAboutView
+        statusBarMenu.addItem(aboutMenuItem)
+        statusBarMenu.addItem(NSMenuItem.separator())
+        statusBarMenu.addItem(
+            withTitle: "Check for updates...",
+            action: nil,
+            keyEquivalent: "")
         statusBarMenu.addItem(
             withTitle: "Preferences...",
             action: #selector(openPreferencesWindow),
             keyEquivalent: "")
-        statusBarMenu.addItem(NSMenuItem.separator())
         statusBarMenu.addItem(
             withTitle: "Quit Jukebox",
             action: #selector(NSApplication.terminate),
@@ -72,6 +83,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
     }
     
+    // MARK: - Handlers
+    
     // Handle left or right click of Status Bar Item
     @objc func didClickStatusBarItem(_ sender: AnyObject?) {
 
@@ -88,6 +101,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
     }
     
+    // Set menu to nil when closed so popover is re-enabled
     func menuDidClose(_: NSMenu) {
         statusBarItem.menu = nil
     }
@@ -106,6 +120,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
     }
     
+    // Updates the title of the status bar with the currently playing track
     @objc func updateStatusBarItemTitle(_ notification: NSNotification) {
 
         // Get track data from notification
@@ -119,6 +134,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
     }
     
+    // Open the preferences window
     @objc func openPreferencesWindow(_ sender: AnyObject?) {
         
         if preferencesWindow == nil {
@@ -134,6 +150,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
 }
+
+// MARK: - SwiftUI App Entry Point
 
 @main
 struct JukeboxApp: App {

@@ -33,6 +33,7 @@
 		E8FB63F2272BB495006F28B8 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FB63F1272BB495006F28B8 /* PreferencesWindow.swift */; };
 		E8FB63F4272BB97C006F28B8 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FB63F3272BB97C006F28B8 /* PreferencesView.swift */; };
 		E8FB63F6272BC7BD006F28B8 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FB63F5272BC7BD006F28B8 /* VisualEffectView.swift */; };
+		E8FB63F8272BEF92006F28B8 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FB63F7272BEF92006F28B8 /* AboutView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -78,6 +79,7 @@
 		E8FB63F1272BB495006F28B8 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		E8FB63F3272BB97C006F28B8 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		E8FB63F5272BC7BD006F28B8 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		E8FB63F7272BEF92006F28B8 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +172,7 @@
 		E8F5723927166E2400C5DF9C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E8FB63F7272BEF92006F28B8 /* AboutView.swift */,
 				E8F5722C27166E0D00C5DF9C /* ContentView.swift */,
 				E8A013DE272AB23500B25B63 /* MetalView.swift */,
 				E80E4CB42727F763000F9D74 /* Seeker.swift */,
@@ -310,6 +313,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8FB63F4272BB97C006F28B8 /* PreferencesView.swift in Sources */,
+				E8FB63F8272BEF92006F28B8 /* AboutView.swift in Sources */,
 				E84A173D2728F490005F8CB4 /* SpotifyClientCredentials.swift in Sources */,
 				E8AF5FC327290EFB00AACF65 /* Secrets.swift in Sources */,
 				E8F57242271678C800C5DF9C /* PressButtonStyle.swift in Sources */,
