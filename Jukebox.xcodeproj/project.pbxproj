@@ -16,6 +16,7 @@
 		E88441BC272D342500C7B650 /* MarqueeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88441BB272D342500C7B650 /* MarqueeText.swift */; };
 		E88441BE272D3A4C00C7B650 /* String+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88441BD272D3A4C00C7B650 /* String+Dimensions.swift */; };
 		E88441C0272D4FA900C7B650 /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88441BF272D4FA900C7B650 /* SwipeView.swift */; };
+		E892FE0D272E878600359A64 /* StatusBarAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E892FE0C272E878600359A64 /* StatusBarAnimation.swift */; };
 		E8A013DD272AB20900B25B63 /* Gradient.metal in Sources */ = {isa = PBXBuildFile; fileRef = E8A013DC272AB20900B25B63 /* Gradient.metal */; };
 		E8A013DF272AB23500B25B63 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A013DE272AB23500B25B63 /* MetalView.swift */; };
 		E8AF5FC027290DEF00AACF65 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = E8AF5FBF27290DEF00AACF65 /* Secrets.plist */; };
@@ -62,6 +63,7 @@
 		E88441BB272D342500C7B650 /* MarqueeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarqueeText.swift; sourceTree = "<group>"; };
 		E88441BD272D3A4C00C7B650 /* String+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Dimensions.swift"; sourceTree = "<group>"; };
 		E88441BF272D4FA900C7B650 /* SwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeView.swift; sourceTree = "<group>"; };
+		E892FE0C272E878600359A64 /* StatusBarAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarAnimation.swift; sourceTree = "<group>"; };
 		E8A013DC272AB20900B25B63 /* Gradient.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Gradient.metal; sourceTree = "<group>"; };
 		E8A013DE272AB23500B25B63 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		E8AF5FBF27290DEF00AACF65 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				E8FB63F5272BC7BD006F28B8 /* VisualEffectView.swift */,
 				E88441BB272D342500C7B650 /* MarqueeText.swift */,
 				E88441BF272D4FA900C7B650 /* SwipeView.swift */,
+				E892FE0C272E878600359A64 /* StatusBarAnimation.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E892FE0D272E878600359A64 /* StatusBarAnimation.swift in Sources */,
 				E8FB63F4272BB97C006F28B8 /* PreferencesView.swift in Sources */,
 				E8FB63F8272BEF92006F28B8 /* AboutView.swift in Sources */,
 				E84A173D2728F490005F8CB4 /* SpotifyClientCredentials.swift in Sources */,

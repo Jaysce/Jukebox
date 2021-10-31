@@ -62,6 +62,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // Initialize the Status Bar Item Button properties
         if let statusBarItemButton = statusBarItem.button {
             
+            // Add bar animation to Status Bar Item Button
+            let barAnimation = StatusBarAnimation(backgroundColor: .white)
+            let y = (statusBarItemButton.bounds.height - barAnimation.bounds.height) / 2
+            barAnimation.setFrameOrigin(NSPoint(x: 12, y: y))
+            barAnimation.autoresizingMask = [ .minYMargin, .maxYMargin ]
+            statusBarItemButton.addSubview(barAnimation)
+            
             // Change Status Bar Button title String attributes
             let trackDetails = "Track Title • Artist"
             let attributes = [ NSAttributedString.Key.font: NSFont.systemFont(ofSize: 12) ]
@@ -80,6 +87,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             selector: #selector(updateStatusBarItemTitle),
             name: NSNotification.Name("TrackChanged"),
             object: nil)
+        
+        // Add observer to listen for status bar appearance changes
+        statusBarItem.addObserver(
+            self,
+            forKeyPath: "button.effectiveAppearance.name",
+            options: [ .new, .initial ],
+            context: nil)
         
     }
     
@@ -129,7 +143,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         // Set the title of the Status Bar Item
         if let statusBarItemButton = statusBarItem.button {
-            statusBarItemButton.title = "\(trackTitle) • \(trackArtist)"
+            statusBarItemButton.title = "       \(trackTitle) • \(trackArtist)" // TODO: Change this later
         }
         
     }
@@ -146,6 +160,30 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         preferencesWindow.center()
         preferencesWindow.makeKeyAndOrderFront(nil)
         NSApplication.shared.activate(ignoringOtherApps: true)
+        
+    }
+    
+    // Called when the status bar appearance is changed to update bar animation color
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
+        if (keyPath == "button.effectiveAppearance.name") {
+            
+            guard let oldBarAnimation = statusBarItem.button?.subviews[0] as? StatusBarAnimation else { return }
+            let appearance = statusBarItem.button?.effectiveAppearance.name
+            let frame = oldBarAnimation.frame
+            
+            switch appearance {
+            case NSAppearance.Name.vibrantDark:
+                let barAnimation = StatusBarAnimation(backgroundColor: .white)
+                barAnimation.frame = frame
+                statusBarItem.button?.replaceSubview(oldBarAnimation, with: barAnimation)
+            default:
+                let barAnimation = StatusBarAnimation(backgroundColor: .black)
+                barAnimation.frame = frame
+                statusBarItem.button?.replaceSubview(oldBarAnimation, with: barAnimation)
+            }
+            
+        }
         
     }
     
