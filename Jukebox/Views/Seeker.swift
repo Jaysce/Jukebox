@@ -25,6 +25,7 @@ struct Seeker: View {
                         .foregroundColor(.white.opacity(0.6))
                         .frame(width: geo.size.width * CGFloat(self.seekerPosition / trackDuration))
                         .animation(.easeInOut, value: self.seekerPosition)
+                    SwipeView(seekerPosition: self.$seekerPosition, onEditingChanged: onEditingChanged)
                 }
                 .frame(width: geo.size.width, height: seekerHeight)
                 .cornerRadius(6)
