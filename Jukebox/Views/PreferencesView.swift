@@ -22,10 +22,7 @@ struct PreferencesView: View {
             
             Divider()
             
-            VStack {
-                Text("Preferences")
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            PreferencePanes()
         }
         .ignoresSafeArea()
     }
@@ -85,6 +82,63 @@ struct AppInfo: View {
                 .buttonStyle(LinkButtonStyle())
             }
         }
+    }
+}
+
+struct PreferencePanes: View {
+    
+    private var visualizers = ["None", "Gradient", "Waves", "Abstract"]
+    @State private var launchAtLogin = false
+    @State private var selectedVisualization = 1
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            GeometryReader { geo in
+                VStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .leading) {
+                        Text("General")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        
+                        Toggle("Launch Jukebox on login", isOn: $launchAtLogin)
+                    }
+                    .padding()
+                    .frame(width: geo.size.width, height: geo.size.height / 3, alignment: .topLeading)
+                    
+                    Divider()
+                    
+                    VStack(alignment: .leading) {
+                        Text("Menu Bar")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        
+                        Toggle("Disable menu bar animation", isOn: $launchAtLogin)
+                        Toggle("Disable menu bar marquee text", isOn: $launchAtLogin)
+                        
+                    }
+                    .padding()
+                    .frame(width: geo.size.width, height: geo.size.height / 3, alignment: .topLeading)
+                    
+                    Divider()
+                    
+                    VStack(alignment: .leading) {
+                        Text("Visualizer")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        
+                        Picker("Style", selection: $selectedVisualization) {
+                            ForEach(0..<visualizers.count) { index in
+                                Text(visualizers[index]).tag(index)
+                            }
+                        }
+                        
+                    }
+                    .padding()
+                    .frame(width: geo.size.width, height: geo.size.height / 3, alignment: .topLeading)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
