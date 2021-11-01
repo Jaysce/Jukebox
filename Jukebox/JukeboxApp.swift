@@ -65,12 +65,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             // Add bar animation to Status Bar Item Button
             let barAnimation = StatusBarAnimation(backgroundColor: .white)
             let y = (statusBarItemButton.bounds.height - barAnimation.bounds.height) / 2
-            barAnimation.setFrameOrigin(NSPoint(x: 12, y: y))
+            barAnimation.setFrameOrigin(NSPoint(x: 0, y: y))
             barAnimation.autoresizingMask = [ .minYMargin, .maxYMargin ]
             statusBarItemButton.addSubview(barAnimation)
             
             // Change Status Bar Button title String attributes
-            let trackDetails = "Track Title • Artist"
+            let trackDetails = ""
             let attributes = [ NSAttributedString.Key.font: NSFont.systemFont(ofSize: 12) ]
             let attributedString = NSAttributedString(string: trackDetails, attributes: attributes)
             statusBarItemButton.attributedTitle = attributedString
@@ -140,10 +140,100 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // Get track data from notification
         guard let trackTitle = notification.userInfo?["title"] else { return }
         guard let trackArtist = notification.userInfo?["artist"] else { return }
+        let titleAndArtist = "\(trackTitle) • \(trackArtist)"
+        let attributes: [NSAttributedString.Key : Any] = [
+            NSAttributedString.Key.font: NSFont.systemFont(ofSize: 13, weight: .medium),
+            NSAttributedString.Key.foregroundColor: NSColor.white.cgColor
+        ]
+        let attributedString = NSAttributedString(string: titleAndArtist, attributes: attributes)
 
         // Set the title of the Status Bar Item
         if let statusBarItemButton = statusBarItem.button {
-            statusBarItemButton.title = "       \(trackTitle) • \(trackArtist)" // TODO: Change this later
+            
+            let containerHeight = statusBarItemButton.bounds.height
+            let stringWidth = attributedString.width(containerHeight: containerHeight)
+            
+            // Remove old subviews to prepare for new track text
+            statusBarItemButton.subviews.forEach({ $0.removeFromSuperview() })
+            
+            // Add bar animation to Status Bar Item Button
+            let barAnimation = StatusBarAnimation(backgroundColor: .white)
+            let y = (statusBarItemButton.bounds.height - barAnimation.bounds.height) / 2
+            barAnimation.setFrameOrigin(NSPoint(x: 12, y: y))
+            barAnimation.autoresizingMask = [ .minYMargin, .maxYMargin ]
+            statusBarItemButton.addSubview(barAnimation)
+            
+            // If the track and artist title is short enough, shrink the button to fit contents
+            if stringWidth < 200 {
+                
+                // Update manipulating image width with similar size as track string width
+                let image = NSImage()
+                image.size = NSSize(
+                    width: attributedString.width(containerHeight: containerHeight) + 33,
+                    height: statusBarItemButton.bounds.height)
+                statusBarItemButton.image = image
+                
+                // Updated width of container after updating the manipulating image width
+                let containerWidth = statusBarItemButton.bounds.width
+                
+                let marquee = MenuMarquee(
+                    frame: NSRect(
+                        x: 0,
+                        y: 0,
+                        width: containerWidth,
+                        height: containerHeight),
+                    text: attributedString,
+                    start: true,
+                    animation: .plain)
+                
+                marquee.setFrameOrigin(NSPoint(x: 0, y: y))
+                marquee.autoresizingMask = [ .minYMargin, .maxYMargin, .minXMargin, .maxXMargin ]
+                statusBarItemButton.addSubview(marquee)
+                
+            }
+            
+            // Otherwise the track and artist title is too long, so restrict button width to 250 and
+            // start animated marquee text
+            else {
+                
+                // Update manipulating image width with width of 250
+                let image = NSImage()
+                image.size = NSSize(width: 250, height: statusBarItemButton.bounds.height)
+                statusBarItemButton.image = image
+                
+                // Updated width of container after updating the manipulating image width
+                let containerWidth = statusBarItemButton.bounds.width
+                                                
+                let marquee1 = MenuMarquee(
+                    frame: NSRect(
+                        x: 0,
+                        y: 0,
+                        width: containerWidth,
+                        height: containerHeight),
+                    text: attributedString,
+                    start: true)
+                
+                marquee1.setFrameOrigin(NSPoint(x: 12, y: y))
+                marquee1.autoresizingMask = [ .minYMargin, .maxYMargin, .minXMargin, .maxXMargin ]
+                statusBarItemButton.addSubview(marquee1)
+                
+                let marquee2 = MenuMarquee(
+                    frame: NSRect(
+                        x: 0,
+                        y: 0,
+                        width: containerWidth,
+                        height: containerHeight),
+                    text: attributedString,
+                    start: false)
+                
+                marquee2.setFrameOrigin(NSPoint(x: stringWidth, y: y))
+                marquee2.autoresizingMask = [ .minYMargin, .maxYMargin, .minXMargin, .maxXMargin ]
+                statusBarItemButton.addSubview(marquee2)
+                
+            }
+
+            statusBarItemButton.title = ""
+            
         }
         
     }

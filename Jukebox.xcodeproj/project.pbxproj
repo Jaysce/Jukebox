@@ -17,6 +17,7 @@
 		E88441BE272D3A4C00C7B650 /* String+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88441BD272D3A4C00C7B650 /* String+Dimensions.swift */; };
 		E88441C0272D4FA900C7B650 /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88441BF272D4FA900C7B650 /* SwipeView.swift */; };
 		E892FE0D272E878600359A64 /* StatusBarAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E892FE0C272E878600359A64 /* StatusBarAnimation.swift */; };
+		E892FE13272F4F9C00359A64 /* MenuMarquee.swift in Sources */ = {isa = PBXBuildFile; fileRef = E892FE12272F4F9C00359A64 /* MenuMarquee.swift */; };
 		E8A013DD272AB20900B25B63 /* Gradient.metal in Sources */ = {isa = PBXBuildFile; fileRef = E8A013DC272AB20900B25B63 /* Gradient.metal */; };
 		E8A013DF272AB23500B25B63 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A013DE272AB23500B25B63 /* MetalView.swift */; };
 		E8AF5FC027290DEF00AACF65 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = E8AF5FBF27290DEF00AACF65 /* Secrets.plist */; };
@@ -24,6 +25,7 @@
 		E8AF5FC5272924AC00AACF65 /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AF5FC4272924AC00AACF65 /* String+Base64.swift */; };
 		E8AF5FC72729278F00AACF65 /* SpotifySearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AF5FC62729278F00AACF65 /* SpotifySearchResult.swift */; };
 		E8AF5FC9272927B800AACF65 /* MusixMatchLyrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AF5FC8272927B800AACF65 /* MusixMatchLyrics.swift */; };
+		E8E00584272FFC8000D8AE1B /* NSAttributedString+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E00583272FFC8000D8AE1B /* NSAttributedString+Dimensions.swift */; };
 		E8F5722B27166E0D00C5DF9C /* JukeboxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F5722A27166E0D00C5DF9C /* JukeboxApp.swift */; };
 		E8F5722D27166E0D00C5DF9C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F5722C27166E0D00C5DF9C /* ContentView.swift */; };
 		E8F5722F27166E1300C5DF9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8F5722E27166E1300C5DF9C /* Assets.xcassets */; };
@@ -64,6 +66,7 @@
 		E88441BD272D3A4C00C7B650 /* String+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Dimensions.swift"; sourceTree = "<group>"; };
 		E88441BF272D4FA900C7B650 /* SwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeView.swift; sourceTree = "<group>"; };
 		E892FE0C272E878600359A64 /* StatusBarAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarAnimation.swift; sourceTree = "<group>"; };
+		E892FE12272F4F9C00359A64 /* MenuMarquee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuMarquee.swift; sourceTree = "<group>"; };
 		E8A013DC272AB20900B25B63 /* Gradient.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Gradient.metal; sourceTree = "<group>"; };
 		E8A013DE272AB23500B25B63 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		E8AF5FBF27290DEF00AACF65 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
@@ -71,6 +74,7 @@
 		E8AF5FC4272924AC00AACF65 /* String+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Base64.swift"; sourceTree = "<group>"; };
 		E8AF5FC62729278F00AACF65 /* SpotifySearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifySearchResult.swift; sourceTree = "<group>"; };
 		E8AF5FC8272927B800AACF65 /* MusixMatchLyrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusixMatchLyrics.swift; sourceTree = "<group>"; };
+		E8E00583272FFC8000D8AE1B /* NSAttributedString+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Dimensions.swift"; sourceTree = "<group>"; };
 		E8F5722727166E0D00C5DF9C /* Jukebox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jukebox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8F5722A27166E0D00C5DF9C /* JukeboxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JukeboxApp.swift; sourceTree = "<group>"; };
 		E8F5722C27166E0D00C5DF9C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -190,6 +194,7 @@
 				E88441BB272D342500C7B650 /* MarqueeText.swift */,
 				E88441BF272D4FA900C7B650 /* SwipeView.swift */,
 				E892FE0C272E878600359A64 /* StatusBarAnimation.swift */,
+				E892FE12272F4F9C00359A64 /* MenuMarquee.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -225,6 +230,7 @@
 				E8AF5FC227290EFB00AACF65 /* Secrets.swift */,
 				E8AF5FC4272924AC00AACF65 /* String+Base64.swift */,
 				E88441BD272D3A4C00C7B650 /* String+Dimensions.swift */,
+				E8E00583272FFC8000D8AE1B /* NSAttributedString+Dimensions.swift */,
 				E8F572482716865F00C5DF9C /* Jukebox-Bridging-Header.h */,
 			);
 			path = Utilities;
@@ -335,6 +341,7 @@
 				E8F572402716785700C5DF9C /* ChipStyle.swift in Sources */,
 				E8F5722B27166E0D00C5DF9C /* JukeboxApp.swift in Sources */,
 				E80E4CB827281297000F9D74 /* NetworkManager.swift in Sources */,
+				E8E00584272FFC8000D8AE1B /* NSAttributedString+Dimensions.swift in Sources */,
 				E88441BE272D3A4C00C7B650 /* String+Dimensions.swift in Sources */,
 				E80E4CB52727F763000F9D74 /* Seeker.swift in Sources */,
 				E8F5723D2716760E00C5DF9C /* ContentViewModel.swift in Sources */,
@@ -343,6 +350,7 @@
 				E8AF5FC5272924AC00AACF65 /* String+Base64.swift in Sources */,
 				E8AF5FC72729278F00AACF65 /* SpotifySearchResult.swift in Sources */,
 				E8A013DD272AB20900B25B63 /* Gradient.metal in Sources */,
+				E892FE13272F4F9C00359A64 /* MenuMarquee.swift in Sources */,
 				E8A013DF272AB23500B25B63 /* MetalView.swift in Sources */,
 				E84A173F2728F4CB005F8CB4 /* NetworkError.swift in Sources */,
 				E88441BC272D342500C7B650 /* MarqueeText.swift in Sources */,
