@@ -14,9 +14,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var popover: NSPopover!
     private var preferencesWindow: PreferencesWindow!
     
-    // MARK: - On Finish Launch
-    
     func applicationDidFinishLaunching(_ notification: Notification) {
+        
+        // MARK: - ContentView / Popover
         
         let frameSize = NSSize(width: 400, height: 200)
         
@@ -33,6 +33,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         popover.contentViewController = NSViewController()
         popover.contentViewController?.view = hostedContentView
         popover.contentViewController?.view.window?.makeKey()
+        
+        // MARK: - Status Bar
         
         // Initialize Status Bar Menu
         statusBarMenu = NSMenu()
@@ -63,23 +65,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if let statusBarItemButton = statusBarItem.button {
             
             // Add bar animation to Status Bar Item Button
-            let barAnimation = StatusBarAnimation(backgroundColor: .white)
-            let y = (statusBarItemButton.bounds.height - barAnimation.bounds.height) / 2
-            barAnimation.setFrameOrigin(NSPoint(x: 0, y: y))
-            barAnimation.autoresizingMask = [ .minYMargin, .maxYMargin ]
+            let barAnimation = StatusBarAnimation(
+                menubarAppearance: statusBarItemButton.effectiveAppearance,
+                menubarHeight: statusBarItemButton.bounds.height)
             statusBarItemButton.addSubview(barAnimation)
             
-            // Change Status Bar Button title String attributes
-            let trackDetails = ""
-            let attributes = [ NSAttributedString.Key.font: NSFont.systemFont(ofSize: 12) ]
-            let attributedString = NSAttributedString(string: trackDetails, attributes: attributes)
-            statusBarItemButton.attributedTitle = attributedString
+            // Add default marquee text
+            let marqueeText = MenuMarqueeText(
+                text: "",
+                menubarBounds: statusBarItemButton.bounds,
+                menubarAppearance: statusBarItemButton.effectiveAppearance)
+            statusBarItemButton.addSubview(marqueeText)
+            
+            statusBarItemButton.frame = NSRect(x: 0, y: 0, width: barAnimation.bounds.width + 16, height: statusBarItemButton.bounds.height)
+            marqueeText.menubarBounds = statusBarItemButton.bounds
             
             // Set Status Bar Item Button click action
             statusBarItemButton.action = #selector(didClickStatusBarItem)
             statusBarItemButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
             
         }
+        
+        // MARK: - Observers
         
         // Add observer to listen to when track changes to update the title in the menu bar
         NotificationCenter.default.addObserver(
@@ -141,101 +148,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard let trackTitle = notification.userInfo?["title"] else { return }
         guard let trackArtist = notification.userInfo?["artist"] else { return }
         let titleAndArtist = "\(trackTitle) • \(trackArtist)"
-        let attributes: [NSAttributedString.Key : Any] = [
-            NSAttributedString.Key.font: NSFont.systemFont(ofSize: 13, weight: .medium),
-            NSAttributedString.Key.foregroundColor: NSColor.white.cgColor
-        ]
-        let attributedString = NSAttributedString(string: titleAndArtist, attributes: attributes)
 
-        // Set the title of the Status Bar Item
-        if let statusBarItemButton = statusBarItem.button {
-            
-            let containerHeight = statusBarItemButton.bounds.height
-            let stringWidth = attributedString.width(containerHeight: containerHeight)
-            
-            // Remove old subviews to prepare for new track text
-            statusBarItemButton.subviews.forEach({ $0.removeFromSuperview() })
-            
-            // Add bar animation to Status Bar Item Button
-            let barAnimation = StatusBarAnimation(backgroundColor: .white)
-            let y = (statusBarItemButton.bounds.height - barAnimation.bounds.height) / 2
-            barAnimation.setFrameOrigin(NSPoint(x: 12, y: y))
-            barAnimation.autoresizingMask = [ .minYMargin, .maxYMargin ]
-            statusBarItemButton.addSubview(barAnimation)
-            
-            // If the track and artist title is short enough, shrink the button to fit contents
-            if stringWidth < 200 {
-                
-                // Update manipulating image width with similar size as track string width
-                let image = NSImage()
-                image.size = NSSize(
-                    width: attributedString.width(containerHeight: containerHeight) + 33,
-                    height: statusBarItemButton.bounds.height)
-                statusBarItemButton.image = image
-                
-                // Updated width of container after updating the manipulating image width
-                let containerWidth = statusBarItemButton.bounds.width
-                
-                let marquee = MenuMarquee(
-                    frame: NSRect(
-                        x: 0,
-                        y: 0,
-                        width: containerWidth,
-                        height: containerHeight),
-                    text: attributedString,
-                    start: true,
-                    animation: .plain)
-                
-                marquee.setFrameOrigin(NSPoint(x: 0, y: y))
-                marquee.autoresizingMask = [ .minYMargin, .maxYMargin, .minXMargin, .maxXMargin ]
-                statusBarItemButton.addSubview(marquee)
-                
-            }
-            
-            // Otherwise the track and artist title is too long, so restrict button width to 250 and
-            // start animated marquee text
-            else {
-                
-                // Update manipulating image width with width of 250
-                let image = NSImage()
-                image.size = NSSize(width: 250, height: statusBarItemButton.bounds.height)
-                statusBarItemButton.image = image
-                
-                // Updated width of container after updating the manipulating image width
-                let containerWidth = statusBarItemButton.bounds.width
-                                                
-                let marquee1 = MenuMarquee(
-                    frame: NSRect(
-                        x: 0,
-                        y: 0,
-                        width: containerWidth,
-                        height: containerHeight),
-                    text: attributedString,
-                    start: true)
-                
-                marquee1.setFrameOrigin(NSPoint(x: 12, y: y))
-                marquee1.autoresizingMask = [ .minYMargin, .maxYMargin, .minXMargin, .maxXMargin ]
-                statusBarItemButton.addSubview(marquee1)
-                
-                let marquee2 = MenuMarquee(
-                    frame: NSRect(
-                        x: 0,
-                        y: 0,
-                        width: containerWidth,
-                        height: containerHeight),
-                    text: attributedString,
-                    start: false)
-                
-                marquee2.setFrameOrigin(NSPoint(x: stringWidth, y: y))
-                marquee2.autoresizingMask = [ .minYMargin, .maxYMargin, .minXMargin, .maxXMargin ]
-                statusBarItemButton.addSubview(marquee2)
-                
-            }
-
-            statusBarItemButton.title = ""
-            
-        }
+        // Get status item button and marquee text view from button
+        guard let button = statusBarItem.button else { return }
+        guard let marqueeText = button.subviews[1] as? MenuMarqueeText else { return }
         
+        // Calculate string width
+        let font = NSFont.systemFont(ofSize: 13, weight: .regular) // TODO: Create some structure to maintain constants
+        let stringWidth = titleAndArtist.stringWidth(with: font)
+        
+        // Set Marquee text with new track data
+        marqueeText.text = titleAndArtist
+        
+        // Update frame for status item and marquee text to accommodate new track data
+        // 32 is for animation, 8 is for padding TODO: Create some structure to maintain constants
+        button.frame = NSRect(x: 0, y: 0, width: stringWidth < 200 ? stringWidth + 30 + 8 : 200, height: button.bounds.height)
+        marqueeText.menubarBounds = button.bounds
+
     }
     
     // Open the preferences window
@@ -253,24 +182,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
     }
     
-    // Called when the status bar appearance is changed to update bar animation color
+    // Called when the status bar appearance is changed to update bar animation color and marquee text color
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         if (keyPath == "button.effectiveAppearance.name") {
             
-            guard let oldBarAnimation = statusBarItem.button?.subviews[0] as? StatusBarAnimation else { return }
-            let appearance = statusBarItem.button?.effectiveAppearance.name
-            let frame = oldBarAnimation.frame
+            // Get bar animation and marquee from status item button
+            guard let barAnimation = statusBarItem.button?.subviews[0] as? StatusBarAnimation else { return }
+            guard let marquee = statusBarItem.button?.subviews[1] as? MenuMarqueeText else { return }
             
+            let appearance = statusBarItem.button?.effectiveAppearance.name
+            
+            // Update based on current menu bar appearance
             switch appearance {
             case NSAppearance.Name.vibrantDark:
-                let barAnimation = StatusBarAnimation(backgroundColor: .white)
-                barAnimation.frame = frame
-                statusBarItem.button?.replaceSubview(oldBarAnimation, with: barAnimation)
+                barAnimation.menubarIsDarkAppearance = true
+                marquee.menubarIsDarkAppearance = true
             default:
-                let barAnimation = StatusBarAnimation(backgroundColor: .black)
-                barAnimation.frame = frame
-                statusBarItem.button?.replaceSubview(oldBarAnimation, with: barAnimation)
+                barAnimation.menubarIsDarkAppearance = false
+                marquee.menubarIsDarkAppearance = false
             }
             
         }

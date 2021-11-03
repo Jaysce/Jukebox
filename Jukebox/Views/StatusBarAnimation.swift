@@ -10,8 +10,29 @@ import AppKit
 
 class StatusBarAnimation: NSView {
     
-    init(backgroundColor: CGColor) {
-        super.init(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
+    // Invalidating Variables
+    var menubarIsDarkAppearance: Bool {
+        didSet {
+            self.needsDisplay = true
+        }
+    }
+    
+    // Computed Properties
+    private var backgroundColor: CGColor {
+        menubarIsDarkAppearance ? NSColor.white.cgColor : NSColor.black.cgColor
+    }
+    
+    // Properties
+    private var bars = [CALayer]()
+    
+    // Overrides
+    override var wantsUpdateLayer: Bool {
+        return true
+    }
+    
+    init(menubarAppearance: NSAppearance, menubarHeight: Double) {
+        self.menubarIsDarkAppearance  = menubarAppearance.name == .vibrantDark ? true : false
+        super.init(frame: CGRect(x: 8, y: 0, width: 14, height: menubarHeight))
         self.wantsLayer = true
         
         for i in 0...4 {
@@ -19,7 +40,7 @@ class StatusBarAnimation: NSView {
             bar.backgroundColor = backgroundColor
             bar.cornerRadius = 1
             bar.cornerCurve = .continuous
-            bar.frame = CGRect(x: i * 3, y: 0, width: 2, height: 10)
+            bar.frame = CGRect(x: Double(i) * 3.0, y: (menubarHeight / 2) - 5, width: 2.0, height: 10.0)
             self.layer?.addSublayer(bar)
             
             let animation = CABasicAnimation(keyPath: #keyPath(CALayer.bounds))
@@ -30,11 +51,18 @@ class StatusBarAnimation: NSView {
             animation.repeatCount = .greatestFiniteMagnitude
             animation.beginTime = CACurrentMediaTime() - Double(i)
             bar.add(animation, forKey: nil)
+            bars.append(bar)
         }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func updateLayer() {
+        for bar in bars {
+            bar.backgroundColor = backgroundColor
+        }
     }
     
 }
