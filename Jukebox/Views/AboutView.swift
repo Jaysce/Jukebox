@@ -9,12 +9,9 @@ import SwiftUI
 
 struct AboutView: View {
     
-    let jukeboxRepo = "https://github.com/Jaysce/Jukebox"
-    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-    
     var body: some View {
         HStack {
-            Link(destination: URL(string: jukeboxRepo)!) {
+            Link(destination: Constants.AppInfo.repo) {
                 Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
                     .resizable()
                     .scaledToFit()
@@ -22,7 +19,7 @@ struct AboutView: View {
             }
             VStack(alignment: .leading) {
                 Text("Jukebox").font(.title).fontWeight(.bold)
-                Text("Version \(appVersion ?? "?")")
+                Text("Version \(Constants.AppInfo.appVersion ?? "?")")
             }
             Spacer()
         }

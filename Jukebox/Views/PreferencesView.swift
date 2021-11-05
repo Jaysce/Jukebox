@@ -12,13 +12,13 @@ struct PreferencesView: View {
     weak var parentWindow: PreferencesWindow!
     
     var body: some View {
-        HStack(spacing: 0) {
+        VStack(spacing: 0) {
             ZStack {
                 VisualEffectView(material: .sidebar, blendingMode: .behindWindow)
                 CloseButton(parentWindow: parentWindow)
-                AppInfo().offset(x: 1) // Looks like it was off center (?)
+                AppInfo()
             }
-            .frame(maxWidth: 140, maxHeight: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: 60)
             
             Divider()
             
@@ -35,6 +35,7 @@ struct CloseButton: View {
     
     var body: some View {
         VStack {
+            Spacer()
             HStack {
                 Button {
                     parentWindow.close()
@@ -47,7 +48,7 @@ struct CloseButton: View {
                     if hovering { isHoveringCloseButton = true }
                     else { isHoveringCloseButton = false }
                 })
-                .padding(12)
+                .padding(.leading, 12)
                 Spacer()
             }
             Spacer()
@@ -57,31 +58,41 @@ struct CloseButton: View {
 
 struct AppInfo: View {
     
-    let jukeboxRepo = "https://github.com/Jaysce/Jukebox"
-    let jukeboxWebPage = "https://jaysce.dev"
-    
     var body: some View {
-        VStack(spacing: 8) {
-            Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
-                .resizable()
-                .scaledToFit()
-                .frame(width: 100, height: 100)
+        HStack(spacing: 8) {
+            HStack {
+                Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+                VStack(alignment: .leading) {
+                    Text("Jukebox").font(.headline)
+                    Text("Version \(Constants.AppInfo.appVersion ?? "?")")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+            }
+            .padding(.leading)
+            
+            Spacer()
+            
             HStack {
                 Button {
-                    NSWorkspace.shared.open(URL(string: jukeboxRepo)!)
+                    NSWorkspace.shared.open(Constants.AppInfo.repo)
                 } label: {
                     Text("GitHub").font(.system(size: 12))
                 }
                 .buttonStyle(LinkButtonStyle())
                 
                 Button {
-                    NSWorkspace.shared.open(URL(string: jukeboxWebPage)!)
+                    NSWorkspace.shared.open(Constants.AppInfo.website)
                 } label: {
                     Text("Website").font(.system(size: 12))
                 }
                 .buttonStyle(LinkButtonStyle())
             }
         }
+        .padding(.horizontal)
     }
 }
 

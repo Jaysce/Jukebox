@@ -12,7 +12,7 @@ class PreferencesWindow: NSWindow {
     
     init() {
         super.init(
-            contentRect: NSRect(x: 0, y: 0, width: 500, height: 350),
+            contentRect: NSRect(x: 0, y: 0, width: 400, height: 500),
             styleMask: [.titled, .fullSizeContentView],
             backing: .buffered,
             defer: false)
