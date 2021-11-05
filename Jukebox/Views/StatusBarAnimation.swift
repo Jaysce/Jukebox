@@ -32,7 +32,11 @@ class StatusBarAnimation: NSView {
     
     init(menubarAppearance: NSAppearance, menubarHeight: Double) {
         self.menubarIsDarkAppearance  = menubarAppearance.name == .vibrantDark ? true : false
-        super.init(frame: CGRect(x: 8, y: 0, width: 14, height: menubarHeight))
+        super.init(frame: CGRect(
+            x: Constants.StatusBar.statusBarButtonPadding,
+            y: 0,
+            width: Constants.StatusBar.barAnimationWidth,
+            height: menubarHeight))
         self.wantsLayer = true
         
         for i in 0...4 {

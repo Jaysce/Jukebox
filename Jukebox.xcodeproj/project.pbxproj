@@ -10,6 +10,7 @@
 		E800A8B22732811D00DBDF0E /* MenuMarqueeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800A8B12732811D00DBDF0E /* MenuMarqueeText.swift */; };
 		E80E4CB52727F763000F9D74 /* Seeker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80E4CB42727F763000F9D74 /* Seeker.swift */; };
 		E80E4CB827281297000F9D74 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80E4CB727281297000F9D74 /* NetworkManager.swift */; };
+		E82271BC2735514400D1795D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82271BB2735514400D1795D /* Constants.swift */; };
 		E84A17382728E6F1005F8CB4 /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = E84A17372728E6F1005F8CB4 /* PromiseKit */; };
 		E84A173B2728EAC3005F8CB4 /* LyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84A173A2728EAC3005F8CB4 /* LyricsView.swift */; };
 		E84A173D2728F490005F8CB4 /* SpotifyClientCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84A173C2728F490005F8CB4 /* SpotifyClientCredentials.swift */; };
@@ -60,6 +61,7 @@
 		E800A8B12732811D00DBDF0E /* MenuMarqueeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuMarqueeText.swift; sourceTree = "<group>"; };
 		E80E4CB42727F763000F9D74 /* Seeker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seeker.swift; sourceTree = "<group>"; };
 		E80E4CB727281297000F9D74 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		E82271BB2735514400D1795D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E84A173A2728EAC3005F8CB4 /* LyricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsView.swift; sourceTree = "<group>"; };
 		E84A173C2728F490005F8CB4 /* SpotifyClientCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyClientCredentials.swift; sourceTree = "<group>"; };
 		E84A173E2728F4CB005F8CB4 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 		E8F57247271685EF00C5DF9C /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				E82271BB2735514400D1795D /* Constants.swift */,
 				E8AF5FC227290EFB00AACF65 /* Secrets.swift */,
 				E8AF5FC4272924AC00AACF65 /* String+Base64.swift */,
 				E88441BD272D3A4C00C7B650 /* String+Dimensions.swift */,
@@ -341,6 +344,7 @@
 				E8F572402716785700C5DF9C /* ChipStyle.swift in Sources */,
 				E8F5722B27166E0D00C5DF9C /* JukeboxApp.swift in Sources */,
 				E80E4CB827281297000F9D74 /* NetworkManager.swift in Sources */,
+				E82271BC2735514400D1795D /* Constants.swift in Sources */,
 				E8E00584272FFC8000D8AE1B /* NSAttributedString+Dimensions.swift in Sources */,
 				E88441BE272D3A4C00C7B650 /* String+Dimensions.swift in Sources */,
 				E80E4CB52727F763000F9D74 /* Seeker.swift in Sources */,

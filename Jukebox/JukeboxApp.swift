@@ -154,15 +154,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard let marqueeText = button.subviews[1] as? MenuMarqueeText else { return }
         
         // Calculate string width
-        let font = NSFont.systemFont(ofSize: 13, weight: .regular) // TODO: Create some structure to maintain constants
+        let font = Constants.StatusBar.marqueeFont
         let stringWidth = titleAndArtist.stringWidth(with: font)
         
         // Set Marquee text with new track data
         marqueeText.text = titleAndArtist
         
-        // Update frame for status item and marquee text to accommodate new track data
-        // 32 is for animation, 8 is for padding TODO: Create some structure to maintain constants
-        button.frame = NSRect(x: 0, y: 0, width: stringWidth < 200 ? stringWidth + 30 + 8 : 200, height: button.bounds.height)
+        let limit = Constants.StatusBar.statusBarButtonLimit
+        let animWidth = Constants.StatusBar.barAnimationWidth
+        let padding = Constants.StatusBar.statusBarButtonPadding
+        
+        // Set button frame
+        button.frame = NSRect(
+            x: 0,
+            y: 0,
+            width: stringWidth < limit ? stringWidth + animWidth + 3*padding : limit + animWidth + 3*padding,
+            height: button.bounds.height)
         marqueeText.menubarBounds = button.bounds
 
     }
