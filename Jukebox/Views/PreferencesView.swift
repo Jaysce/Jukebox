@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LaunchAtLogin
 
 struct PreferencesView: View {
     
@@ -100,9 +101,7 @@ struct PreferencePanes: View {
     
     @AppStorage("visualizerStyle") private var visualizerStyle = VisualizerStyle.gradient.rawValue
     @AppStorage("swipeToSeek") private var swipeToSeek = false
-    
-    @State private var dummy = false
-    
+        
     private var visualizers = ["None", "Gradient"]
     
     var body: some View {
@@ -114,7 +113,7 @@ struct PreferencePanes: View {
                             .font(.title2)
                             .fontWeight(.semibold)
                         
-                        Toggle("Launch Jukebox on login", isOn: $dummy)
+                        LaunchAtLogin.Toggle()
                         Toggle("Swipe to seek on trackpad (Experimental)", isOn: $swipeToSeek)
                     }
                     .padding()
@@ -127,8 +126,9 @@ struct PreferencePanes: View {
                             .font(.title2)
                             .fontWeight(.semibold)
                         
-                        Toggle("Disable menu bar animation", isOn: $dummy)
-                        Toggle("Disable menu bar marquee text", isOn: $dummy)
+                        // TODO: Implement functionality of these toggles
+                        Toggle("Disable menu bar animation", isOn: .constant(false))
+                        Toggle("Disable menu bar marquee text", isOn: .constant(false))
                         
                     }
                     .padding()

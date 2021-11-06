@@ -16,6 +16,7 @@
 		E84A173B2728EAC3005F8CB4 /* LyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84A173A2728EAC3005F8CB4 /* LyricsView.swift */; };
 		E84A173D2728F490005F8CB4 /* SpotifyClientCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84A173C2728F490005F8CB4 /* SpotifyClientCredentials.swift */; };
 		E84A173F2728F4CB005F8CB4 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84A173E2728F4CB005F8CB4 /* NetworkError.swift */; };
+		E8767C66273688FB00E39D17 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = E8767C65273688FB00E39D17 /* LaunchAtLogin */; };
 		E88441BC272D342500C7B650 /* MarqueeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88441BB272D342500C7B650 /* MarqueeText.swift */; };
 		E88441BE272D3A4C00C7B650 /* String+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88441BD272D3A4C00C7B650 /* String+Dimensions.swift */; };
 		E88441C0272D4FA900C7B650 /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88441BF272D4FA900C7B650 /* SwipeView.swift */; };
@@ -103,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8767C66273688FB00E39D17 /* LaunchAtLogin in Frameworks */,
 				E8F5724B2716888D00C5DF9C /* MediaRemote.framework in Frameworks */,
 				E84A17382728E6F1005F8CB4 /* PromiseKit in Frameworks */,
 			);
@@ -268,6 +270,7 @@
 				E8F5722327166E0D00C5DF9C /* Sources */,
 				E8F5722427166E0D00C5DF9C /* Frameworks */,
 				E8F5722527166E0D00C5DF9C /* Resources */,
+				E8767C67273689D400E39D17 /* ShellScript */,
 				E8F5724D2716888D00C5DF9C /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -277,6 +280,7 @@
 			name = Jukebox;
 			packageProductDependencies = (
 				E84A17372728E6F1005F8CB4 /* PromiseKit */,
+				E8767C65273688FB00E39D17 /* LaunchAtLogin */,
 			);
 			productName = Jukebox;
 			productReference = E8F5722727166E0D00C5DF9C /* Jukebox.app */;
@@ -308,6 +312,7 @@
 			mainGroup = E8F5721E27166E0D00C5DF9C;
 			packageReferences = (
 				E84A17362728E6F1005F8CB4 /* XCRemoteSwiftPackageReference "PromiseKit" */,
+				E8767C64273688FB00E39D17 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
 			);
 			productRefGroup = E8F5722827166E0D00C5DF9C /* Products */;
 			projectDirPath = "";
@@ -330,6 +335,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E8767C67273689D400E39D17 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/copy-helper-swiftpm.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E8F5722327166E0D00C5DF9C /* Sources */ = {
@@ -586,6 +611,14 @@
 				version = 6.16.1;
 			};
 		};
+		E8767C64273688FB00E39D17 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -593,6 +626,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E84A17362728E6F1005F8CB4 /* XCRemoteSwiftPackageReference "PromiseKit" */;
 			productName = PromiseKit;
+		};
+		E8767C65273688FB00E39D17 /* LaunchAtLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8767C64273688FB00E39D17 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
+			productName = LaunchAtLogin;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
