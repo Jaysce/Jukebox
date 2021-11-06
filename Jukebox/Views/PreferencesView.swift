@@ -98,9 +98,12 @@ struct AppInfo: View {
 
 struct PreferencePanes: View {
     
-    private var visualizers = ["None", "Gradient", "Waves", "Abstract"]
-    @State private var launchAtLogin = false
-    @State private var selectedVisualization = 1
+    @AppStorage("visualizerStyle") private var visualizerStyle = VisualizerStyle.gradient.rawValue
+    @AppStorage("swipeToSeek") private var swipeToSeek = false
+    
+    @State private var dummy = false
+    
+    private var visualizers = ["None", "Gradient"]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -111,7 +114,8 @@ struct PreferencePanes: View {
                             .font(.title2)
                             .fontWeight(.semibold)
                         
-                        Toggle("Launch Jukebox on login", isOn: $launchAtLogin)
+                        Toggle("Launch Jukebox on login", isOn: $dummy)
+                        Toggle("Swipe to seek on trackpad (Experimental)", isOn: $swipeToSeek)
                     }
                     .padding()
                     .frame(width: geo.size.width, height: geo.size.height / 3, alignment: .topLeading)
@@ -123,8 +127,8 @@ struct PreferencePanes: View {
                             .font(.title2)
                             .fontWeight(.semibold)
                         
-                        Toggle("Disable menu bar animation", isOn: $launchAtLogin)
-                        Toggle("Disable menu bar marquee text", isOn: $launchAtLogin)
+                        Toggle("Disable menu bar animation", isOn: $dummy)
+                        Toggle("Disable menu bar marquee text", isOn: $dummy)
                         
                     }
                     .padding()
@@ -137,10 +141,13 @@ struct PreferencePanes: View {
                             .font(.title2)
                             .fontWeight(.semibold)
                         
-                        Picker("Style", selection: $selectedVisualization) {
+                        Picker("Style", selection: $visualizerStyle) {
                             ForEach(0..<visualizers.count) { index in
                                 Text(visualizers[index]).tag(index)
                             }
+                        }
+                        .onChange(of: visualizerStyle) { val in
+                            visualizerStyle = val
                         }
                         
                     }

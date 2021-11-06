@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     
+    // User Defaults
+    @AppStorage("visualizerStyle") private var visualizerStyle: VisualizerStyle = .gradient
+    
     // View Model
     @ObservedObject var contentViewVM: ContentViewModel
     
@@ -17,11 +20,17 @@ struct ContentView: View {
     @State private var playbackScale = 1.0
     @State private var lyricsScale = 1.2
     
+    // Constants
+    let primaryOpacity = 0.8
+    let secondaryOpacity = 0.4
+    let ternaryOpacity = 0.2
+    
     var body: some View {
         
         ZStack {
-            // TODO: Visualizer View
-            MetalView(popoverIsShown: contentViewVM.popoverIsShown).padding(-80)
+            if visualizerStyle == .gradient {
+                MetalView(popoverIsShown: contentViewVM.popoverIsShown).padding(-80)
+            }
             
             VStack(spacing: 16) {
                 // Media details
@@ -29,7 +38,10 @@ struct ContentView: View {
                     // Album art image
                     ZStack {
                         Rectangle()
-                            .foregroundColor(.white.opacity(0.2))
+                            .foregroundColor(
+                                visualizerStyle != .none
+                                ? .white.opacity(ternaryOpacity)
+                                : .primary.opacity(ternaryOpacity))
                             .frame(width: 80, height: 80)
                             .cornerRadius(8)
                         
@@ -43,13 +55,19 @@ struct ContentView: View {
                     // Track details
                     VStack(alignment: .leading) {
                         Text(contentViewVM.track.title)
-                            .foregroundColor(.white).opacity(0.8)
+                            .foregroundColor(
+                                visualizerStyle != .none
+                                ? .white.opacity(primaryOpacity)
+                                : .primary.opacity(primaryOpacity))
                             .font(.system(size: 20, weight: .bold))
                             .lineLimit(1)
                         Text(contentViewVM.track.artist)
                             .font(.headline)
                             .lineLimit(1)
-                            .foregroundColor(.white).opacity(0.4)
+                            .foregroundColor(
+                                visualizerStyle != .none
+                                ? .white.opacity(secondaryOpacity)
+                                : .primary.opacity(secondaryOpacity))
                         
                         Spacer()
                         
@@ -75,8 +93,9 @@ struct ContentView: View {
                             }
                             .pressButtonStyle()
                         }
+                        .padding(.bottom, 4)
                     }
-                    .padding(.vertical, 6)
+                    .frame(width: .infinity, height: 80)
                     
                     Spacer()
                 }
@@ -97,7 +116,10 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "backward.fill")
                             .font(.system(size: 20))
-                            .foregroundColor(.white).opacity(0.8)
+                            .foregroundColor(
+                                visualizerStyle != .none
+                                ? .white.opacity(primaryOpacity)
+                                : .primary.opacity(primaryOpacity))
                     }
                     .pressButtonStyle()
 
@@ -106,7 +128,10 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: contentViewVM.isPlaying ? "pause.fill" : "play.fill")
                             .font(.system(size: 30))
-                            .foregroundColor(.white).opacity(0.8)
+                            .foregroundColor(
+                                visualizerStyle != .none
+                                ? .white.opacity(primaryOpacity)
+                                : .primary.opacity(primaryOpacity))
                             .frame(width: 32, height: 32)
                     }
                     .pressButtonStyle()
@@ -116,7 +141,10 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "forward.fill")
                             .font(.system(size: 20))
-                            .foregroundColor(.white).opacity(0.8)
+                            .foregroundColor(
+                                visualizerStyle != .none
+                                ? .white.opacity(primaryOpacity)
+                                : .primary.opacity(primaryOpacity))
                     }
                     .pressButtonStyle()
                 }

@@ -9,13 +9,26 @@ import Foundation
 import SwiftUI
 
 struct ChipStyle: ViewModifier {
+    
+    @AppStorage("visualizerStyle") private var visualizerStyle: VisualizerStyle = .gradient
+    
+    // Constants
+    let primaryOpacity = 0.8
+    let ternaryOpacity = 0.2
+    
     func body(content: Content) -> some View {
         content
             .font(.caption)
-            .foregroundColor(.white.opacity(0.8))
+            .foregroundColor(
+                visualizerStyle != .none
+                ? .white.opacity(primaryOpacity)
+                : .primary.opacity(primaryOpacity))
             .padding(.vertical, 3)
             .padding(.horizontal, 10)
-            .background(Color.white.opacity(0.2))
+            .background(
+                visualizerStyle != .none
+                ? Color.white.opacity(ternaryOpacity)
+                : Color.primary.opacity(ternaryOpacity))
             .cornerRadius(20)
     }
 }

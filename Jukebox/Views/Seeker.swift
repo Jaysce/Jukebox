@@ -9,23 +9,41 @@ import SwiftUI
 
 struct Seeker: View {
     
+    // User Defaults
+    @AppStorage("visualizerStyle") private var visualizerStyle: VisualizerStyle = .gradient
+    @AppStorage("swipeToSeek") private var swipeToSeek = false
+    
+    // Properties
     var trackDuration: Double
     @Binding var seekerPosition: Double
     let onEditingChanged: (Bool) -> Void
     
+    // States for animations
     @State private var seekerHeight: CGFloat = 4
+    
+    // Constants
+    let primaryOpacity = 0.6
+    let ternaryOpacity = 0.2
     
     var body: some View {
         GeometryReader { geo in
             VStack {
                 ZStack(alignment: .leading) {
                     Rectangle()
-                        .foregroundColor(.white.opacity(0.2))
+                        .foregroundColor(
+                            visualizerStyle != .none
+                            ? .white.opacity(ternaryOpacity)
+                            : .primary.opacity(ternaryOpacity))
                     Rectangle()
-                        .foregroundColor(.white.opacity(0.6))
+                        .foregroundColor(
+                            visualizerStyle != .none
+                            ? .white.opacity(primaryOpacity)
+                            : .primary.opacity(primaryOpacity))
                         .frame(width: geo.size.width * CGFloat(self.seekerPosition / trackDuration))
                         .animation(.easeInOut, value: self.seekerPosition)
-                    SwipeView(seekerPosition: self.$seekerPosition, onEditingChanged: onEditingChanged)
+                    if swipeToSeek {
+                        SwipeView(seekerPosition: self.$seekerPosition, onEditingChanged: onEditingChanged)
+                    }
                 }
                 .frame(width: geo.size.width, height: seekerHeight)
                 .cornerRadius(6)
@@ -40,11 +58,17 @@ struct Seeker: View {
                         }))
                 HStack {
                     Text(formatSecondsForDisplay(seekerPosition))
-                        .foregroundColor(.white.opacity(0.6))
+                        .foregroundColor(
+                            visualizerStyle != .none
+                            ? .white.opacity(primaryOpacity)
+                            : .primary.opacity(primaryOpacity))
                         .font(.caption)
                     Spacer()
                     Text(formatSecondsForDisplay(trackDuration))
-                        .foregroundColor(.white.opacity(0.6))
+                        .foregroundColor(
+                            visualizerStyle != .none
+                            ? .white.opacity(primaryOpacity)
+                            : .primary.opacity(primaryOpacity))
                         .font(.caption)
                 }
             }
