@@ -75,7 +75,7 @@ class MenuMarqueeText: NSView {
     }
     
     private func setupTextLayer(isFirstLayer: Bool) -> CATextLayer {
-        let font = NSFont.systemFont(ofSize: 13, weight: .regular)
+        let font = Constants.StatusBar.marqueeFont
         let stringWidth = text.stringWidth(with: font) + padding
         let stringHeight = text.stringHeight(with: font)
                 
