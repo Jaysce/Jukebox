@@ -40,7 +40,7 @@ struct Seeker: View {
                             ? .white.opacity(primaryOpacity)
                             : .primary.opacity(primaryOpacity))
                         .frame(width: geo.size.width * CGFloat(self.seekerPosition / trackDuration))
-                        .animation(.easeInOut, value: self.seekerPosition)
+//                        .animation(.easeInOut, value: self.seekerPosition)
                     if swipeToSeek {
                         SwipeView(seekerPosition: self.$seekerPosition, onEditingChanged: onEditingChanged)
                     }

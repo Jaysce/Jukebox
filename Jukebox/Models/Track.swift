@@ -10,8 +10,8 @@ import SwiftUI
 
 struct Track {
     
-    var title = "Title"
-    var artist = "Artist"
+    var title = ""
+    var artist = ""
     var albumArt = NSImage()
     var lyrics = "No lyrics for current song..."
     

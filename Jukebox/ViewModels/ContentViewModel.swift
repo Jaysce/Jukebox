@@ -8,8 +8,13 @@
 import Foundation
 import SwiftUI
 import PromiseKit
+import ScriptingBridge
 
 class ContentViewModel: ObservableObject {
+    
+    // Music Applications
+    let spotifyApp: SpotifyApplication = SBApplication(bundleIdentifier: Constants.Spotify.bundleID)!
+    // TODO: Apple Music
     
     // Popover
     @Published var popoverIsShown = true
@@ -19,11 +24,9 @@ class ContentViewModel: ObservableObject {
     @Published var isPlaying = false
     
     // Seeker
-    @Published var timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    @Published var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @Published var trackDuration: Double = 0
     @Published var seekerPosition: Double = 0
-    private var elapsedTime = 0.0
-    private var timestamp: Date?
     
     // Lyrics
     private var accessToken: String?
@@ -31,39 +34,21 @@ class ContentViewModel: ObservableObject {
     
     init() {
         setupObservers()
-        getPlayState()
-        getTrackInformation()
-        getCurrentSeekerPosition()
-        fetchLyrics()
+        guard spotifyApp.isRunning else { return }
+        playStateOrTrackDidChange(nil)
     }
     
     // MARK: - Observers
     
     private func setupObservers() {
         
-        // Register NotificationCenter to listen for MediaRemote notifications
-        MRMediaRemoteRegisterForNowPlayingNotifications(DispatchQueue.main)
-        
-        // Add observer to listen for track change
-        NotificationCenter.default.addObserver(
+        // ScriptingBridge Observer
+        DistributedNotificationCenter.default().addObserver(
             self,
-            selector: #selector(trackDidChange),
-            name: NSNotification.Name("kMRMediaRemoteNowPlayingInfoDidChangeNotification"),
-            object: nil)
-        
-        // Add observer to listen for play state change
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(playStateDidChange),
-            name: NSNotification.Name("kMRMediaRemoteNowPlayingApplicationIsPlayingDidChangeNotification"),
-            object: nil)
-        
-        // Add observer to listen for application change
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(applicationDidChange),
-            name: NSNotification.Name("kMRMediaRemoteNowPlayingApplicationDidChangeNotification"),
-            object: nil)
+            selector: #selector(playStateOrTrackDidChange),
+            name: NSNotification.Name(rawValue: Constants.Spotify.notification),
+            object: nil,
+            suspensionBehavior: .deliverImmediately)
         
         // Add observer to listen for popover open
         NotificationCenter.default.addObserver(
@@ -81,28 +66,30 @@ class ContentViewModel: ObservableObject {
         
     }
     
-    // MARK: - MR Notification Handlers
+    // MARK: - Notification Handlers
     
-    @objc private func trackDidChange() {
-        print("The currently playing track changed")
-        getTrackInformation()
-        fetchLyrics()
-    }
-    
-    @objc private func playStateDidChange() {
-        print("The play state changed")
+    @objc func playStateOrTrackDidChange(_ sender: NSNotification?) {
+        guard spotifyApp.isRunning else { return }
+        guard sender?.userInfo?["Player State"] as? String != "Stopped" else {
+            self.track.title = ""
+            self.track.artist = ""
+            updateMenuBarText()
+            return
+        }
+        
+        print("The play state or the currently playing track changed")
         getPlayState()
-    }
-    
-    @objc private func applicationDidChange() {
-        print("The application changed")
+        getTrackInformation()
+        getCurrentSeekerPosition()
+        fetchLyrics()
     }
     
     // MARK: - Media & Playback
     
     private func getPlayState() {
-        MRMediaRemoteGetNowPlayingApplicationIsPlaying(DispatchQueue.main) { isPlaying in
-            self.isPlaying = isPlaying
+        switch spotifyApp.playerState {
+        case.playing: self.isPlaying = true
+        default: self.isPlaying = false
         }
     }
     
@@ -110,60 +97,63 @@ class ContentViewModel: ObservableObject {
         
         print("Getting track information...")
         
-        MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main) { trackInformation in
-            
-            guard let trackInformation = trackInformation as? [String: AnyObject] else { return }
-            
-            // Track
-            self.track.title = trackInformation["kMRMediaRemoteNowPlayingInfoTitle"] as? String ?? "Unknown Title"
-            self.track.artist = trackInformation["kMRMediaRemoteNowPlayingInfoArtist"] as? String ?? "Unknown Artist"
-            let albumArtData = trackInformation["kMRMediaRemoteNowPlayingInfoArtworkData"] as? Data
-            self.track.albumArt = NSImage(data: albumArtData ?? Data()) ?? NSImage()
-            
-            // Seeker
-            self.trackDuration = trackInformation["kMRMediaRemoteNowPlayingInfoDuration"] as? Double ?? 0
-            self.elapsedTime = trackInformation["kMRMediaRemoteNowPlayingInfoElapsedTime"] as? Double ?? 0
-            self.timestamp = trackInformation["kMRMediaRemoteNowPlayingInfoTimestamp"] as? Date ?? Date()
-            
-            // Post notification to update the menu bar track title
-            let trackInfo: [String: String] = ["title": self.track.title, "artist": self.track.artist]
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "TrackChanged"), object: nil, userInfo: trackInfo)
-            
+        // Track
+        self.track.title = spotifyApp.currentTrack?.name ?? "Unknown Title"
+        self.track.artist = spotifyApp.currentTrack?.artist ?? "Unknown Artist"
+        if let artworkURLString = spotifyApp.currentTrack?.artworkUrl,
+           let url = URL(string: artworkURLString) {
+            URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+                guard let data = data, error == nil else {
+                    print(error!.localizedDescription)
+                    return
+                }
+                self?.track.albumArt = NSImage(data: data) ?? NSImage()
+                
+            }.resume()
         }
+        
+        // Seeker
+        self.trackDuration = Double(spotifyApp.currentTrack?.duration ?? 0) / 1000
+        self.seekerPosition = Double(spotifyApp.playerPosition ?? 0)
+        
+        // Post notification to update the menu bar track title
+        updateMenuBarText()
         
     }
     
+    private func updateMenuBarText() {
+        DispatchQueue.main.async { [weak self] in
+            guard let title = self?.track.title, let artist = self?.track.artist else { return }
+            let trackInfo: [String: String] = ["title": title, "artist": artist]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "TrackChanged"), object: nil, userInfo: trackInfo)
+        }
+    }
+    
     func togglePlayPause() {
-        MRMediaRemoteSendCommand(kMRTogglePlayPause, nil)
+        spotifyApp.playpause?()
     }
     
     func previousTrack() {
-        MRMediaRemoteSendCommand(kMRPreviousTrack, nil)
+        spotifyApp.previousTrack?()
     }
     
     func nextTrack() {
-        MRMediaRemoteSendCommand(kMRNextTrack, nil)
+        spotifyApp.nextTrack?()
     }
     
     // MARK: - Seeker
     
     func getCurrentSeekerPosition() {
-        guard let timestamp = timestamp else { return }
-        if (isPlaying) {
-            seekerPosition = elapsedTime + Date().timeIntervalSince(timestamp)
-        } else {
-            // This needs to change maybe
-            elapsedTime = seekerPosition
-            seekerPosition = elapsedTime
-        }
+        guard spotifyApp.isRunning else { return }
+        self.seekerPosition = Double(spotifyApp.playerPosition ?? 0)
     }
     
     func seekTrack() {
-        MRMediaRemoteSetElapsedTime(seekerPosition)
+        spotifyApp.setPlayerPosition?(seekerPosition)
     }
     
     func startTimer() {
-        timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+        timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     }
     
     func pauseTimer() {

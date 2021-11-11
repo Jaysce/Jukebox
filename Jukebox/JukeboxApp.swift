@@ -145,12 +145,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func updateStatusBarItemTitle(_ notification: NSNotification) {
 
         // Get track data from notification
-        guard let trackTitle = notification.userInfo?["title"] else { return }
-        guard let trackArtist = notification.userInfo?["artist"] else { return }
-        let titleAndArtist = "\(trackTitle) • \(trackArtist)"
+        guard let trackTitle = notification.userInfo?["title"] as? String else { return }
+        guard let trackArtist = notification.userInfo?["artist"] as? String else { return }
+        let titleAndArtist = trackTitle.isEmpty && trackArtist.isEmpty ? "" : "\(trackTitle) • \(trackArtist)"
 
         // Get status item button and marquee text view from button
         guard let button = statusBarItem.button else { return }
+        guard let barAnimation = button.subviews[0] as? StatusBarAnimation else { return }
         guard let marqueeText = button.subviews[1] as? MenuMarqueeText else { return }
         
         // Calculate string width
@@ -163,6 +164,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let limit = Constants.StatusBar.statusBarButtonLimit
         let animWidth = Constants.StatusBar.barAnimationWidth
         let padding = Constants.StatusBar.statusBarButtonPadding
+        
+        if titleAndArtist.isEmpty {
+            button.frame = NSRect(x: 0, y: 0, width: barAnimation.bounds.width + 16, height: button.bounds.height)
+            return
+        }
         
         // Set button frame
         button.frame = NSRect(
