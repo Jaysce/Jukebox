@@ -18,7 +18,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         // MARK: - ContentView / Popover
         
-        let frameSize = NSSize(width: 400, height: 200)
+        let frameSize = NSSize(width: 272, height: 350)
         
         // Initialize ContentView
         @StateObject var contentViewVM = ContentViewModel()

@@ -16,9 +16,13 @@ struct ContentView: View {
     @ObservedObject var contentViewVM: ContentViewModel
     
     // States for animations
+    @State private var isShowingPlaybackControls = false
+    // Currently not being used, Lyrics has been shelved for now
+    /*
     @State private var showingLyrics = false
     @State private var playbackScale = 1.0
     @State private var lyricsScale = 1.2
+     */
     
     // Constants
     let primaryOpacity = 0.8
@@ -39,10 +43,11 @@ struct ContentView: View {
                         ? .white.opacity(secondaryOpacity)
                         : .primary.opacity(secondaryOpacity))
                     .font(.system(size: 24, weight: .bold))
+                    .multilineTextAlignment(.center)
             } else {
-                VStack(spacing: 16) {
+                VStack(spacing: 0) {
                     // Media details
-                    HStack {
+                    VStack {
                         // Album art image
                         ZStack {
                             Rectangle()
@@ -50,125 +55,94 @@ struct ContentView: View {
                                     visualizerStyle != .none
                                     ? .white.opacity(ternaryOpacity)
                                     : .primary.opacity(ternaryOpacity))
-                                .frame(width: 80, height: 80)
+                                .frame(width: 240, height: 240)
                                 .cornerRadius(8)
                             
                             Image(nsImage: contentViewVM.track.albumArt)
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: 80, height: 80)
+                                .frame(width: 240, height: 240)
                                 .cornerRadius(8)
+                                .shadow(color: .black.opacity(0.4), radius: 8, x: 0, y: 4)
+                            
+                            // Playback Buttons
+                            HStack(spacing: 6) {
+                                Button {
+                                    contentViewVM.previousTrack()
+                                } label: {
+                                    Image(systemName: "backward.fill")
+                                        .font(.system(size: 14))
+                                        .foregroundColor(.primary.opacity(primaryOpacity))
+                                }
+                                .pressButtonStyle()
+                                
+                                Button {
+                                    contentViewVM.togglePlayPause()
+                                } label: {
+                                    Image(systemName: contentViewVM.isPlaying ? "pause.fill" : "play.fill")
+                                        .font(.system(size: 22))
+                                        .foregroundColor(.primary.opacity(primaryOpacity))
+                                        .frame(width: 25, height: 25)
+                                }
+                                .pressButtonStyle()
+                                
+                                Button {
+                                    contentViewVM.nextTrack()
+                                } label: {
+                                    Image(systemName: "forward.fill")
+                                        .font(.system(size: 14))
+                                        .foregroundColor(.primary.opacity(primaryOpacity))
+                                }
+                                .pressButtonStyle()
+                            }
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 6)
+                            .background(VisualEffectView(material: .popover, blendingMode: .withinWindow))
+                            .cornerRadius(100)
+                            .opacity(isShowingPlaybackControls ? 1 : 0)
+                            
+                        }
+                        .onHover { _ in
+                            withAnimation(.linear(duration: 0.1)) {
+                                self.isShowingPlaybackControls.toggle()
+                            }
+                            
                         }
                         
+                        Spacer()
+                        
                         // Track details
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .center) {
                             Text(contentViewVM.track.title)
                                 .foregroundColor(
                                     visualizerStyle != .none
                                     ? .white.opacity(primaryOpacity)
                                     : .primary.opacity(primaryOpacity))
-                                .font(.system(size: 20, weight: .bold))
+                                .font(.system(size: 18, weight: .bold))
                                 .lineLimit(1)
                             Text(contentViewVM.track.artist)
                                 .font(.headline)
+                                .fontWeight(.medium)
                                 .lineLimit(1)
                                 .foregroundColor(
                                     visualizerStyle != .none
-                                    ? .white.opacity(secondaryOpacity)
-                                    : .primary.opacity(secondaryOpacity))
-                            
-                            Spacer()
-                            
-                            // Linked App and Lyrics
-                            HStack(spacing: 4) {
-                                // TODO: Make adaptive to current application
-                                Button {
-                                    // Ability to switch active music apps
-                                } label: {
-                                    Image(systemName: "link")
-                                        .chipStyle()
-                                }
-                                .pressButtonStyle()
-                                
-                                // TODO: Lyrics, this button should only appear when lyrics available
-                                Button {
-                                    self.showingLyrics = true
-                                    self.playbackScale = 0.8
-                                    self.lyricsScale = 1
-                                } label: {
-                                    Image(systemName: "quote.bubble.fill")
-                                        .chipStyle()
-                                }
-                                .pressButtonStyle()
-                            }
-                            .padding(.bottom, 4)
+                                    ? .white.opacity(primaryOpacity)
+                                    : .primary.opacity(primaryOpacity))
+                            Text("\(formatSecondsForDisplay(contentViewVM.seekerPosition)) / \(formatSecondsForDisplay(contentViewVM.trackDuration))")
+                                .foregroundColor(
+                                    visualizerStyle != .none
+                                    ? .white.opacity(0.6)
+                                    : .primary.opacity(0.6))
+                                .font(.subheadline)
+                                .padding(.top, 2)
                         }
-                        .frame(width: .infinity, height: 80)
+                        .frame(width: .infinity, height: 68)
                         
-                        Spacer()
                     }
                     
-                    Seeker(trackDuration: contentViewVM.trackDuration, seekerPosition: $contentViewVM.seekerPosition) { isDragging in
-                        if (isDragging) {
-                            contentViewVM.pauseTimer()
-                        } else {
-                            contentViewVM.seekTrack()
-                            contentViewVM.startTimer()
-                        }
-                    }
-                    
-                    // Playback Buttons
-                    HStack(spacing: 24) {
-                        Button {
-                            contentViewVM.previousTrack()
-                        } label: {
-                            Image(systemName: "backward.fill")
-                                .font(.system(size: 20))
-                                .foregroundColor(
-                                    visualizerStyle != .none
-                                    ? .white.opacity(primaryOpacity)
-                                    : .primary.opacity(primaryOpacity))
-                        }
-                        .pressButtonStyle()
-
-                        Button {
-                            contentViewVM.togglePlayPause()
-                        } label: {
-                            Image(systemName: contentViewVM.isPlaying ? "pause.fill" : "play.fill")
-                                .font(.system(size: 30))
-                                .foregroundColor(
-                                    visualizerStyle != .none
-                                    ? .white.opacity(primaryOpacity)
-                                    : .primary.opacity(primaryOpacity))
-                                .frame(width: 32, height: 32)
-                        }
-                        .pressButtonStyle()
-                        
-                        Button {
-                            contentViewVM.nextTrack()
-                        } label: {
-                            Image(systemName: "forward.fill")
-                                .font(.system(size: 20))
-                                .foregroundColor(
-                                    visualizerStyle != .none
-                                    ? .white.opacity(primaryOpacity)
-                                    : .primary.opacity(primaryOpacity))
-                        }
-                        .pressButtonStyle()
-                    }
                 }
                 .padding()
-                .opacity(showingLyrics ? 0 : 1)
-                .scaleEffect(playbackScale)
-                .animation(.timingCurve(0.12,0.76,0.44,0.99), value: playbackScale)
-                .animation(.timingCurve(0.12,0.76,0.44,0.99), value: showingLyrics)
             }
-            
-            LyricsView(lyrics: contentViewVM.track.lyrics, showingLyrics: $showingLyrics, playbackScale: $playbackScale, lyricsScale: $lyricsScale)
-                .opacity(showingLyrics ? 1 : 0)
-                .scaleEffect(lyricsScale)
-                .animation(.timingCurve(0.12,0.76,0.44,0.99), value: lyricsScale)
-                .animation(.timingCurve(0.12,0.76,0.44,0.99), value: showingLyrics)
         }
         .onAppear(perform: {
             contentViewVM.playStateOrTrackDidChange(nil)
@@ -176,6 +150,17 @@ struct ContentView: View {
         .onReceive(contentViewVM.timer) { _ in
             contentViewVM.getCurrentSeekerPosition()
         }
+    }
+    
+    private func formatSecondsForDisplay(_ seconds: Double) -> String {
+        let date = Date.init(timeIntervalSince1970: seconds)
+        let hours = Int(seconds / 3600)
+        
+        let formatter = DateFormatter()
+        if (hours > 0) { formatter.dateFormat = "H:m:ss" }
+        else { formatter.dateFormat = "m:ss" }
+
+        return formatter.string(from: date)
     }
     
 }

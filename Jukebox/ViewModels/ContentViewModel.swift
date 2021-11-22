@@ -24,7 +24,7 @@ class ContentViewModel: ObservableObject {
     @Published var isPlaying = false
     
     // Seeker
-    @Published var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @Published var timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     @Published var trackDuration: Double = 0
     @Published var seekerPosition: Double = 0
     
@@ -80,8 +80,9 @@ class ContentViewModel: ObservableObject {
         print("The play state or the currently playing track changed")
         getPlayState()
         getTrackInformation()
-        getCurrentSeekerPosition()
-        fetchLyrics()
+        
+        // Shelved for now
+        // fetchLyrics()
     }
     
     // MARK: - Media & Playback
@@ -100,6 +101,7 @@ class ContentViewModel: ObservableObject {
         // Track
         self.track.title = spotifyApp.currentTrack?.name ?? "Unknown Title"
         self.track.artist = spotifyApp.currentTrack?.artist ?? "Unknown Artist"
+        self.track.album = spotifyApp.currentTrack?.album ?? "Unknown Album"
         if let artworkURLString = spotifyApp.currentTrack?.artworkUrl,
            let url = URL(string: artworkURLString) {
             URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
@@ -153,7 +155,7 @@ class ContentViewModel: ObservableObject {
     }
     
     func startTimer() {
-        timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+        timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     }
     
     func pauseTimer() {

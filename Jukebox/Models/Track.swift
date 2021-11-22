@@ -12,6 +12,7 @@ struct Track {
     
     var title = ""
     var artist = ""
+    var album = ""
     var albumArt = NSImage()
     var lyrics = "No lyrics for current song..."
     
