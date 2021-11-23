@@ -10,56 +10,56 @@ import LaunchAtLogin
 
 struct PreferencesView: View {
     
-    weak var parentWindow: PreferencesWindow!
+    private weak var parentWindow: PreferencesWindow!
     
+    @AppStorage("visualizerStyle") private var visualizerStyle = VisualizerStyle.gradient.rawValue
+    @AppStorage("swipeToSeek") private var swipeToSeek = false
+        
+    private var visualizers = ["None", "Gradient"]
+    
+    init(parentWindow: PreferencesWindow) {
+        self.parentWindow = parentWindow
+    }
+    
+    // MARK: - Main Body
     var body: some View {
+        
         VStack(spacing: 0) {
             ZStack {
                 VisualEffectView(material: .sidebar, blendingMode: .behindWindow)
-                CloseButton(parentWindow: parentWindow)
-                AppInfo()
+                closeButton
+                appInfo
             }
             .frame(maxWidth: .infinity, maxHeight: 60)
             
             Divider()
             
-            PreferencePanes()
+            preferencePanes
         }
         .ignoresSafeArea()
+        
     }
-}
-
-struct CloseButton: View {
     
-    weak var parentWindow: PreferencesWindow!
-    @State private var isHoveringCloseButton = false
-    
-    var body: some View {
+    // MARK: - Close Button
+    private var closeButton: some View {
         VStack {
             Spacer()
             HStack {
                 Button {
                     parentWindow.close()
-                    isHoveringCloseButton = false
                 } label: {
-                    Image(isHoveringCloseButton ? "close_hover" : "close")
+                    Image(systemName: "xmark.circle.fill")
                 }
-                .pressButtonStyle()
-                .onHover(perform: { hovering in
-                    if hovering { isHoveringCloseButton = true }
-                    else { isHoveringCloseButton = false }
-                })
+                .buttonStyle(BorderlessButtonStyle())
                 .padding(.leading, 12)
                 Spacer()
             }
             Spacer()
         }
     }
-}
-
-struct AppInfo: View {
     
-    var body: some View {
+    // MARK: - App Info
+    private var appInfo: some View {
         HStack(spacing: 8) {
             HStack {
                 Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
@@ -91,77 +91,45 @@ struct AppInfo: View {
                     Text("Website").font(.system(size: 12))
                 }
                 .buttonStyle(LinkButtonStyle())
+                .disabled(true)
             }
         }
-        .padding(.horizontal)
+        .padding(.horizontal, 18)
     }
-}
-
-struct PreferencePanes: View {
     
-    @AppStorage("visualizerStyle") private var visualizerStyle = VisualizerStyle.gradient.rawValue
-    @AppStorage("swipeToSeek") private var swipeToSeek = false
-        
-    private var visualizers = ["None", "Gradient"]
-    
-    var body: some View {
+    // MARK: - Preference Panes
+    private var preferencePanes: some View {
         VStack(alignment: .leading, spacing: 0) {
-            GeometryReader { geo in
-                VStack(alignment: .leading, spacing: 0) {
-                    VStack(alignment: .leading) {
-                        Text("General")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                        
-                        LaunchAtLogin.Toggle()
-                        Toggle("Swipe to seek on trackpad (Experimental)", isOn: $swipeToSeek)
+            
+            // General Pane
+            VStack(alignment: .leading) {
+                Text("General")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                LaunchAtLogin.Toggle()
+//                Toggle("Swipe to seek on trackpad (Experimental)", isOn: $swipeToSeek) Shelved for now
+            }
+            .padding()
+            
+            Divider()
+            
+            // Visualizer Pane
+            VStack(alignment: .leading) {
+                Text("Visualizer")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                Picker("Style", selection: $visualizerStyle) {
+                    ForEach(0..<visualizers.count) { index in
+                        Text(visualizers[index]).tag(index)
                     }
-                    .padding()
-                    .frame(width: geo.size.width, height: geo.size.height / 3, alignment: .topLeading)
-                    
-                    Divider()
-                    
-                    VStack(alignment: .leading) {
-                        Text("Menu Bar")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                        
-                        // TODO: Implement functionality of these toggles
-                        Toggle("Disable menu bar animation", isOn: .constant(false))
-                        Toggle("Disable menu bar marquee text", isOn: .constant(false))
-                        
-                    }
-                    .padding()
-                    .frame(width: geo.size.width, height: geo.size.height / 3, alignment: .topLeading)
-                    
-                    Divider()
-                    
-                    VStack(alignment: .leading) {
-                        Text("Visualizer")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                        
-                        Picker("Style", selection: $visualizerStyle) {
-                            ForEach(0..<visualizers.count) { index in
-                                Text(visualizers[index]).tag(index)
-                            }
-                        }
-                        .onChange(of: visualizerStyle) { val in
-                            visualizerStyle = val
-                        }
-                        
-                    }
-                    .padding()
-                    .frame(width: geo.size.width, height: geo.size.height / 3, alignment: .topLeading)
+                }
+                .onChange(of: visualizerStyle) { val in
+                    visualizerStyle = val
                 }
             }
+            .padding()
+            
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-}
-
-struct PreferencesView_Previews: PreviewProvider {
-    static var previews: some View {
-        PreferencesView()
-    }
+    
 }
