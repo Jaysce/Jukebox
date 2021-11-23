@@ -17,8 +17,8 @@ struct ContentView: View {
     
     // States for animations
     @State private var isShowingPlaybackControls = false
-    // Currently not being used, Lyrics has been shelved for now
-    /*
+    
+    /* Currently not being used, Lyrics has been shelved for now
     @State private var showingLyrics = false
     @State private var playbackScale = 1.0
     @State private var lyricsScale = 1.2
@@ -26,6 +26,7 @@ struct ContentView: View {
     
     // Constants
     let primaryOpacity = 0.8
+    let primaryOpacity2 = 0.6
     let secondaryOpacity = 0.4
     let ternaryOpacity = 0.2
     
@@ -126,17 +127,18 @@ struct ContentView: View {
                                 .lineLimit(1)
                                 .foregroundColor(
                                     visualizerStyle != .none
-                                    ? .white.opacity(primaryOpacity)
-                                    : .primary.opacity(primaryOpacity))
+                                    ? .white.opacity(primaryOpacity2)
+                                    : .primary.opacity(primaryOpacity2))
                             Text("\(formatSecondsForDisplay(contentViewVM.seekerPosition)) / \(formatSecondsForDisplay(contentViewVM.trackDuration))")
                                 .foregroundColor(
                                     visualizerStyle != .none
-                                    ? .white.opacity(0.6)
-                                    : .primary.opacity(0.6))
+                                    ? .white.opacity(secondaryOpacity)
+                                    : .primary.opacity(secondaryOpacity))
                                 .font(.subheadline)
                                 .padding(.top, 2)
                         }
                         .frame(width: .infinity, height: 68)
+                        .padding(.horizontal, 8)
                         
                     }
                     

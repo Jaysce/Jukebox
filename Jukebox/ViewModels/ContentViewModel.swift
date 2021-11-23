@@ -116,7 +116,6 @@ class ContentViewModel: ObservableObject {
         
         // Seeker
         self.trackDuration = Double(spotifyApp.currentTrack?.duration ?? 0) / 1000
-        self.seekerPosition = Double(spotifyApp.playerPosition ?? 0)
         
         // Post notification to update the menu bar track title
         updateMenuBarText()
