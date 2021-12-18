@@ -30,8 +30,11 @@ class StatusBarAnimation: NSView {
         return true
     }
     
+    let barHeights = [7.0, 6.0, 9.0, 8.0]
+    let barDurations = [0.6, 0.3, 0.5, 0.7]
+    
     init(menubarAppearance: NSAppearance, menubarHeight: Double) {
-        self.menubarIsDarkAppearance  = menubarAppearance.name == .vibrantDark ? true : false
+        self.menubarIsDarkAppearance = menubarAppearance.name == .vibrantDark ? true : false
         super.init(frame: CGRect(
             x: Constants.StatusBar.statusBarButtonPadding,
             y: 0,
@@ -39,18 +42,19 @@ class StatusBarAnimation: NSView {
             height: menubarHeight))
         self.wantsLayer = true
         
-        for i in 0...4 {
+        for i in 0..<barHeights.count {
             let bar = CALayer()
             bar.backgroundColor = backgroundColor
             bar.cornerRadius = 1
             bar.cornerCurve = .continuous
-            bar.frame = CGRect(x: Double(i) * 3.0, y: (menubarHeight / 2) - 5, width: 2.0, height: 10.0)
+            bar.anchorPoint = .zero
+            bar.frame = CGRect(x: Double(i) * 3.5, y: (menubarHeight / 2) - 5, width: 2.0, height: barHeights[i])
             self.layer?.addSublayer(bar)
             
             let animation = CABasicAnimation(keyPath: #keyPath(CALayer.bounds))
             animation.fromValue = bar.bounds
             animation.toValue = CGRect(origin: .zero, size: CGSize(width: bar.bounds.width, height: 2))
-            animation.duration = 0.4
+            animation.duration = barDurations[i]
             animation.autoreverses = true
             animation.repeatCount = .greatestFiniteMagnitude
             animation.beginTime = CACurrentMediaTime() - Double(i)

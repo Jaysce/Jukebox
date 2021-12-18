@@ -132,8 +132,8 @@ struct ContentView: View {
                             Text("\(formatSecondsForDisplay(contentViewVM.seekerPosition)) / \(formatSecondsForDisplay(contentViewVM.trackDuration))")
                                 .foregroundColor(
                                     visualizerStyle != .none
-                                    ? .white.opacity(secondaryOpacity)
-                                    : .primary.opacity(secondaryOpacity))
+                                    ? .white.opacity(primaryOpacity2)
+                                    : .primary.opacity(primaryOpacity2))
                                 .font(.subheadline)
                                 .padding(.top, 2)
                         }
