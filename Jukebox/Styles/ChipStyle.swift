@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ChipStyle: ViewModifier {
     
-    @AppStorage("visualizerStyle") private var visualizerStyle: VisualizerStyle = .gradient
+    @AppStorage("visualizerStyle") private var visualizerStyle: VisualizerStyle = .albumArt
     
     // Constants
     let primaryOpacity = 0.8

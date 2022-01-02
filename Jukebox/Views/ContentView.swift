@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     // User Defaults
-    @AppStorage("visualizerStyle") private var visualizerStyle: VisualizerStyle = .gradient
+    @AppStorage("visualizerStyle") private var visualizerStyle: VisualizerStyle = .albumArt
     
     // View Model
     @ObservedObject var contentViewVM: ContentViewModel
@@ -33,8 +33,13 @@ struct ContentView: View {
     var body: some View {
         
         ZStack {
-            if visualizerStyle == .gradient {
-                MetalView(popoverIsShown: contentViewVM.popoverIsShown).padding(-80)
+            if visualizerStyle == .albumArt {
+                Image(nsImage: contentViewVM.track.albumArt)
+                    .resizable()
+                    .scaledToFill()
+                    .padding(-12)
+                VisualEffectView(material: .popover, blendingMode: .withinWindow)
+                    .padding(-12)
             }
             
             if !contentViewVM.spotifyApp.isRunning {
@@ -64,14 +69,14 @@ struct ContentView: View {
                                 .scaledToFill()
                                 .frame(width: 240, height: 240)
                                 .cornerRadius(8)
-                                .shadow(color: .black.opacity(0.4), radius: 8, x: 0, y: 4)
+                                .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
                             
                             // Playback Buttons
                             HStack(spacing: 6) {
                                 Button {
                                     contentViewVM.previousTrack()
                                 } label: {
-                                    Image(systemName: "backward.fill")
+                                    Image(systemName: "backward.end.fill")
                                         .font(.system(size: 14))
                                         .foregroundColor(.primary.opacity(primaryOpacity))
                                 }
@@ -90,7 +95,7 @@ struct ContentView: View {
                                 Button {
                                     contentViewVM.nextTrack()
                                 } label: {
-                                    Image(systemName: "forward.fill")
+                                    Image(systemName: "forward.end.fill")
                                         .font(.system(size: 14))
                                         .foregroundColor(.primary.opacity(primaryOpacity))
                                 }
@@ -115,29 +120,21 @@ struct ContentView: View {
                         // Track details
                         VStack(alignment: .center) {
                             Text(contentViewVM.track.title)
-                                .foregroundColor(
-                                    visualizerStyle != .none
-                                    ? .white.opacity(primaryOpacity)
-                                    : .primary.opacity(primaryOpacity))
-                                .font(.system(size: 18, weight: .bold))
+                                .foregroundColor(.primary.opacity(primaryOpacity))
+                                .font(.system(size: 15, weight: .bold))
                                 .lineLimit(1)
                             Text(contentViewVM.track.artist)
                                 .font(.headline)
                                 .fontWeight(.medium)
                                 .lineLimit(1)
-                                .foregroundColor(
-                                    visualizerStyle != .none
-                                    ? .white.opacity(primaryOpacity2)
-                                    : .primary.opacity(primaryOpacity2))
+                                .foregroundColor(.primary.opacity(primaryOpacity2))
                             Text("\(formatSecondsForDisplay(contentViewVM.seekerPosition)) / \(formatSecondsForDisplay(contentViewVM.trackDuration))")
-                                .foregroundColor(
-                                    visualizerStyle != .none
-                                    ? .white.opacity(primaryOpacity2)
-                                    : .primary.opacity(primaryOpacity2))
+                                .foregroundColor(.primary.opacity(primaryOpacity2))
                                 .font(.subheadline)
                                 .padding(.top, 2)
                         }
-                        .frame(width: .infinity, height: 68)
+                        .frame(width: 216, height: 68, alignment: .center)
+                        .offset(y: 1)
                         .padding(.horizontal, 8)
                         
                     }

@@ -12,10 +12,10 @@ struct PreferencesView: View {
     
     private weak var parentWindow: PreferencesWindow!
     
-    @AppStorage("visualizerStyle") private var visualizerStyle = VisualizerStyle.gradient.rawValue
+    @AppStorage("visualizerStyle") private var visualizerStyle = VisualizerStyle.albumArt.rawValue
     @AppStorage("swipeToSeek") private var swipeToSeek = false
         
-    private var visualizers = ["None", "Gradient"]
+    private var visualizers = ["None", "Artwork"]
     
     init(parentWindow: PreferencesWindow) {
         self.parentWindow = parentWindow
@@ -30,7 +30,8 @@ struct PreferencesView: View {
                 closeButton
                 appInfo
             }
-            .frame(maxWidth: .infinity, maxHeight: 60)
+            .frame(maxWidth: .infinity, minHeight: 60, maxHeight: 60, alignment: .center)
+            .offset(y: 1) // Looked like it was off center
             
             Divider()
             
@@ -115,7 +116,7 @@ struct PreferencesView: View {
             
             // Visualizer Pane
             VStack(alignment: .leading) {
-                Text("Visualizer")
+                Text("Background")
                     .font(.title2)
                     .fontWeight(.semibold)
                 Picker("Style", selection: $visualizerStyle) {

@@ -9,5 +9,5 @@ import Foundation
 
 enum VisualizerStyle: Int {
     case none = 0
-    case gradient = 1
+    case albumArt = 1
 }

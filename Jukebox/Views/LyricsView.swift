@@ -10,7 +10,7 @@ import SwiftUI
 struct LyricsView: View {
     
     // User Defaults
-    @AppStorage("visualizerStyle") private var visualizerStyle: VisualizerStyle = .gradient
+    @AppStorage("visualizerStyle") private var visualizerStyle: VisualizerStyle = .albumArt
     
     // Properties
     let lyrics: String

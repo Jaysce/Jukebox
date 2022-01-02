@@ -10,7 +10,7 @@ import SwiftUI
 struct Seeker: View {
     
     // User Defaults
-    @AppStorage("visualizerStyle") private var visualizerStyle: VisualizerStyle = .gradient
+    @AppStorage("visualizerStyle") private var visualizerStyle: VisualizerStyle = .albumArt
     @AppStorage("swipeToSeek") private var swipeToSeek = false
     
     // Properties
