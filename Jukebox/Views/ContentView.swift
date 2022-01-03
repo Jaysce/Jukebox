@@ -33,7 +33,7 @@ struct ContentView: View {
     var body: some View {
         
         ZStack {
-            if visualizerStyle == .albumArt {
+            if visualizerStyle == .albumArt && contentViewVM.spotifyApp.isRunning {
                 Image(nsImage: contentViewVM.track.albumArt)
                     .resizable()
                     .scaledToFill()
@@ -43,12 +43,14 @@ struct ContentView: View {
             }
             
             if !contentViewVM.spotifyApp.isRunning {
+                MetalView(popoverIsShown: contentViewVM.popoverIsShown).padding(-12)
                 Text("Play something on \(Constants.Spotify.name)")
                     .foregroundColor(
                         visualizerStyle != .none
                         ? .white.opacity(secondaryOpacity)
                         : .primary.opacity(secondaryOpacity))
                     .font(.system(size: 24, weight: .bold))
+                    .frame(width: 216, height: 68, alignment: .center)
                     .multilineTextAlignment(.center)
             } else {
                 VStack(spacing: 0) {

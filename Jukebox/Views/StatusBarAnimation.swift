@@ -17,6 +17,13 @@ class StatusBarAnimation: NSView {
         }
     }
     
+    var isPlaying: Bool = false {
+        didSet {
+            animate()
+            self.needsDisplay = true
+        }
+    }
+    
     // Computed Properties
     private var backgroundColor: CGColor {
         menubarIsDarkAppearance ? NSColor.white.cgColor : NSColor.black.cgColor
@@ -24,6 +31,7 @@ class StatusBarAnimation: NSView {
     
     // Properties
     private var bars = [CALayer]()
+    private var menubarHeight: Double
     
     // Overrides
     override var wantsUpdateLayer: Bool {
@@ -33,8 +41,10 @@ class StatusBarAnimation: NSView {
     let barHeights = [7.0, 6.0, 9.0, 8.0]
     let barDurations = [0.6, 0.3, 0.5, 0.7]
     
-    init(menubarAppearance: NSAppearance, menubarHeight: Double) {
+    init(menubarAppearance: NSAppearance, menubarHeight: Double, isPlaying: Bool) {
         self.menubarIsDarkAppearance = menubarAppearance.name == .vibrantDark ? true : false
+        self.isPlaying = isPlaying
+        self.menubarHeight = menubarHeight
         super.init(frame: CGRect(
             x: Constants.StatusBar.statusBarButtonPadding,
             y: 0,
@@ -42,13 +52,19 @@ class StatusBarAnimation: NSView {
             height: menubarHeight))
         self.wantsLayer = true
         
+        animate()
+    }
+    
+    func animate() {
+        self.layer?.sublayers?.removeAll()
+        bars.removeAll()
         for i in 0..<barHeights.count {
             let bar = CALayer()
             bar.backgroundColor = backgroundColor
             bar.cornerRadius = 1
             bar.cornerCurve = .continuous
             bar.anchorPoint = .zero
-            bar.frame = CGRect(x: Double(i) * 3.5, y: (menubarHeight / 2) - 5, width: 2.0, height: barHeights[i])
+            bar.frame = CGRect(x: Double(i) * 3.5, y: (menubarHeight / 2) - 5, width: 2.0, height: isPlaying ? barHeights[i] : 2.0)
             self.layer?.addSublayer(bar)
             
             let animation = CABasicAnimation(keyPath: #keyPath(CALayer.bounds))

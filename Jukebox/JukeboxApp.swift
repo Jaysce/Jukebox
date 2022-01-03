@@ -67,7 +67,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             // Add bar animation to Status Bar Item Button
             let barAnimation = StatusBarAnimation(
                 menubarAppearance: statusBarItemButton.effectiveAppearance,
-                menubarHeight: statusBarItemButton.bounds.height)
+                menubarHeight: statusBarItemButton.bounds.height, isPlaying: false)
             statusBarItemButton.addSubview(barAnimation)
             
             // Add default marquee text
@@ -147,6 +147,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // Get track data from notification
         guard let trackTitle = notification.userInfo?["title"] as? String else { return }
         guard let trackArtist = notification.userInfo?["artist"] as? String else { return }
+        guard let isPlaying = notification.userInfo?["isPlaying"] as? Bool  else { return }
         let titleAndArtist = trackTitle.isEmpty && trackArtist.isEmpty ? "" : "\(trackTitle) • \(trackArtist)"
 
         // Get status item button and marquee text view from button
@@ -166,6 +167,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let padding = Constants.StatusBar.statusBarButtonPadding
         
         if titleAndArtist.isEmpty {
+            barAnimation.isPlaying = false
             button.frame = NSRect(x: 0, y: 0, width: barAnimation.bounds.width + 16, height: button.bounds.height)
             return
         }
@@ -176,6 +178,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             y: 0,
             width: stringWidth < limit ? stringWidth + animWidth + 3*padding : limit + animWidth + 3*padding,
             height: button.bounds.height)
+        barAnimation.isPlaying = isPlaying
         marqueeText.menubarBounds = button.bounds
 
     }

@@ -124,8 +124,8 @@ class ContentViewModel: ObservableObject {
     
     private func updateMenuBarText() {
         DispatchQueue.main.async { [weak self] in
-            guard let title = self?.track.title, let artist = self?.track.artist else { return }
-            let trackInfo: [String: String] = ["title": title, "artist": artist]
+            guard let title = self?.track.title, let artist = self?.track.artist, let isPlaying = self?.isPlaying else { return }
+            let trackInfo: [String: Any] = ["title": title, "artist": artist, "isPlaying": isPlaying]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "TrackChanged"), object: nil, userInfo: trackInfo)
         }
     }
