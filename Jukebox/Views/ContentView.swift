@@ -154,10 +154,11 @@ struct ContentView: View {
     }
     
     private func formatSecondsForDisplay(_ seconds: Double) -> String {
-        let date = Date.init(timeIntervalSince1970: seconds)
+        let date = Date(timeIntervalSince1970: seconds)
         let hours = Int(seconds / 3600)
         
         let formatter = DateFormatter()
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
         if (hours > 0) { formatter.dateFormat = "H:m:ss" }
         else { formatter.dateFormat = "m:ss" }
 
