@@ -43,14 +43,13 @@ struct ContentView: View {
             }
             
             if !contentViewVM.spotifyApp.isRunning {
-                MetalView(popoverIsShown: contentViewVM.popoverIsShown).padding(-12)
                 Text("Play something on \(Constants.Spotify.name)")
                     .foregroundColor(
                         visualizerStyle != .none
                         ? .white.opacity(secondaryOpacity)
                         : .primary.opacity(secondaryOpacity))
                     .font(.system(size: 24, weight: .bold))
-                    .frame(width: 216, height: 68, alignment: .center)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .multilineTextAlignment(.center)
             } else {
                 VStack(spacing: 0) {

@@ -11,6 +11,7 @@ import MetalKit
 
 struct MetalView: NSViewRepresentable {
     
+    var functionName: String
     var popoverIsShown: Bool
     
     func makeNSView(context: Context) -> MTKView {
@@ -91,7 +92,7 @@ extension MetalView {
             guard let library = device.makeDefaultLibrary() else { return }
         
             // Get our 'compute' function for the shader from the library of Metal files
-            guard let computeFunction = library.makeFunction(name: "compute") else { return }
+            guard let computeFunction = library.makeFunction(name: parent.functionName) else { return }
             
             // Create the pipeline state
             do {

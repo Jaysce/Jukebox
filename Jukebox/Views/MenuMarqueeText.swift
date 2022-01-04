@@ -99,7 +99,7 @@ class MenuMarqueeText: NSView {
         
         if stringWidth - padding < 200 { return textLayer }
         
-        let duration = stringWidth / 40
+        let duration = stringWidth / 30
         let delay = 3.0
         
         let animation = CABasicAnimation(keyPath: "position.x")

@@ -9,15 +9,38 @@ import SwiftUI
 
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
+    @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     private var statusBarItem: NSStatusItem!
     private var statusBarMenu: NSMenu!
     private var popover: NSPopover!
     private var preferencesWindow: PreferencesWindow!
+    private var onboardingWindow: OnboardingWindow!
     
     func applicationDidFinishLaunching(_ notification: Notification) {
+                
+        // Add observer to listen to when track changes to update the title in the menu bar
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateStatusBarItemTitle),
+            name: NSNotification.Name("TrackChanged"),
+            object: nil)
         
-        // MARK: - ContentView / Popover
+        // Onboarding
+        guard viewedOnboarding else {
+            showOnboarding()
+            NSApplication.shared.activate(ignoringOtherApps: true)
+            return
+        }
         
+        // Setup
+        setupContentView()
+        setupStatusBar()
+        
+    }
+    
+    // MARK: - Setup
+    
+    func setupContentView() {
         let frameSize = NSSize(width: 272, height: 350)
         
         // Initialize ContentView
@@ -33,9 +56,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         popover.contentViewController = NSViewController()
         popover.contentViewController?.view = hostedContentView
         popover.contentViewController?.view.window?.makeKey()
-        
-        // MARK: - Status Bar
-        
+    }
+    
+    func setupStatusBar() {
         // Initialize Status Bar Menu
         statusBarMenu = NSMenu()
         statusBarMenu.delegate = self
@@ -86,22 +109,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             
         }
         
-        // MARK: - Observers
-        
-        // Add observer to listen to when track changes to update the title in the menu bar
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(updateStatusBarItemTitle),
-            name: NSNotification.Name("TrackChanged"),
-            object: nil)
-        
         // Add observer to listen for status bar appearance changes
         statusBarItem.addObserver(
             self,
             forKeyPath: "button.effectiveAppearance.name",
             options: [ .new, .initial ],
             context: nil)
-        
     }
     
     // MARK: - Handlers
@@ -221,6 +234,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             
         }
         
+    }
+    
+    private func showOnboarding() {
+        if onboardingWindow == nil {
+            onboardingWindow = OnboardingWindow()
+            let hostedOnboardingView = NSHostingView(rootView: OnboardingView())
+            onboardingWindow.contentView = hostedOnboardingView
+        }
+        
+        onboardingWindow.center()
+        onboardingWindow.makeKeyAndOrderFront(nil)
+        NSApplication.shared.activate(ignoringOtherApps: true)
+    }
+    
+    @objc func finishOnboarding(_ sender: AnyObject) {
+        setupContentView()
+        setupStatusBar()
+        onboardingWindow.close()
+        self.onboardingWindow = nil
     }
     
 }

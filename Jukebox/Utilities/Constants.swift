@@ -31,7 +31,7 @@ enum Constants {
     
     enum AppleMusic {
         static let name = "Apple Music"
-        static let bundleID = "com.apple.iTunes"
+        static let bundleID = "com.apple.Music"
         static let notification = "\(bundleID).playerInfo"
     }
     
