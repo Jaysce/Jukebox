@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E800A8B22732811D00DBDF0E /* MenuMarqueeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800A8B12732811D00DBDF0E /* MenuMarqueeText.swift */; };
+		E80AD61D27859020001FC303 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = E80AD61C27859020001FC303 /* Sparkle */; };
 		E80E4CB52727F763000F9D74 /* Seeker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80E4CB42727F763000F9D74 /* Seeker.swift */; };
 		E80E4CB827281297000F9D74 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80E4CB727281297000F9D74 /* NetworkManager.swift */; };
 		E82271BC2735514400D1795D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82271BB2735514400D1795D /* Constants.swift */; };
@@ -41,27 +42,11 @@
 		E8F572402716785700C5DF9C /* ChipStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F5723F2716785700C5DF9C /* ChipStyle.swift */; };
 		E8F57242271678C800C5DF9C /* PressButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F57241271678C800C5DF9C /* PressButtonStyle.swift */; };
 		E8F5724527167CAF00C5DF9C /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F5724427167CAF00C5DF9C /* Track.swift */; };
-		E8F5724B2716888D00C5DF9C /* MediaRemote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F5724A2716888D00C5DF9C /* MediaRemote.framework */; };
-		E8F5724C2716888D00C5DF9C /* MediaRemote.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E8F5724A2716888D00C5DF9C /* MediaRemote.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E8FB63F2272BB495006F28B8 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FB63F1272BB495006F28B8 /* PreferencesWindow.swift */; };
 		E8FB63F4272BB97C006F28B8 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FB63F3272BB97C006F28B8 /* PreferencesView.swift */; };
 		E8FB63F6272BC7BD006F28B8 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FB63F5272BC7BD006F28B8 /* VisualEffectView.swift */; };
 		E8FB63F8272BEF92006F28B8 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FB63F7272BEF92006F28B8 /* AboutView.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		E8F5724D2716888D00C5DF9C /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				E8F5724C2716888D00C5DF9C /* MediaRemote.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		E800A8B12732811D00DBDF0E /* MenuMarqueeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuMarqueeText.swift; sourceTree = "<group>"; };
@@ -99,8 +84,6 @@
 		E8F5723F2716785700C5DF9C /* ChipStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipStyle.swift; sourceTree = "<group>"; };
 		E8F57241271678C800C5DF9C /* PressButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressButtonStyle.swift; sourceTree = "<group>"; };
 		E8F5724427167CAF00C5DF9C /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
-		E8F572482716865F00C5DF9C /* Jukebox-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jukebox-Bridging-Header.h"; sourceTree = "<group>"; };
-		E8F5724A2716888D00C5DF9C /* MediaRemote.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaRemote.framework; path = ../../../../../System/Library/PrivateFrameworks/MediaRemote.framework; sourceTree = "<group>"; };
 		E8FB63F1272BB495006F28B8 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		E8FB63F3272BB97C006F28B8 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		E8FB63F5272BC7BD006F28B8 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
@@ -112,8 +95,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E80AD61D27859020001FC303 /* Sparkle in Frameworks */,
 				E8767C66273688FB00E39D17 /* LaunchAtLogin in Frameworks */,
-				E8F5724B2716888D00C5DF9C /* MediaRemote.framework in Frameworks */,
 				E84A17382728E6F1005F8CB4 /* PromiseKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -258,7 +241,6 @@
 				E8AF5FC4272924AC00AACF65 /* String+Base64.swift */,
 				E88441BD272D3A4C00C7B650 /* String+Dimensions.swift */,
 				E8E00583272FFC8000D8AE1B /* NSAttributedString+Dimensions.swift */,
-				E8F572482716865F00C5DF9C /* Jukebox-Bridging-Header.h */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -266,7 +248,6 @@
 		E8F572492716888C00C5DF9C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E8F5724A2716888D00C5DF9C /* MediaRemote.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -291,7 +272,6 @@
 				E8F5722427166E0D00C5DF9C /* Frameworks */,
 				E8F5722527166E0D00C5DF9C /* Resources */,
 				E8767C67273689D400E39D17 /* ShellScript */,
-				E8F5724D2716888D00C5DF9C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -301,6 +281,7 @@
 			packageProductDependencies = (
 				E84A17372728E6F1005F8CB4 /* PromiseKit */,
 				E8767C65273688FB00E39D17 /* LaunchAtLogin */,
+				E80AD61C27859020001FC303 /* Sparkle */,
 			);
 			productName = Jukebox;
 			productReference = E8F5722727166E0D00C5DF9C /* Jukebox.app */;
@@ -333,6 +314,7 @@
 			packageReferences = (
 				E84A17362728E6F1005F8CB4 /* XCRemoteSwiftPackageReference "PromiseKit" */,
 				E8767C64273688FB00E39D17 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
+				E80AD61B27859020001FC303 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = E8F5722827166E0D00C5DF9C /* Products */;
 			projectDirPath = "";
@@ -477,7 +459,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OBJC_BRIDGING_HEADER = "Jukebox/Utilities/Jukebox-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -532,7 +514,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OBJC_BRIDGING_HEADER = "Jukebox/Utilities/Jukebox-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
@@ -543,10 +525,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Jukebox/Jukebox.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0.9.1;
 				DEVELOPMENT_ASSET_PATHS = "\"Jukebox/Preview Content\"";
 				DEVELOPMENT_TEAM = P2Q7LG69J2;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -561,7 +543,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.jaysce.Jukebox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -579,10 +561,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Jukebox/Jukebox.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0.9.1;
 				DEVELOPMENT_ASSET_PATHS = "\"Jukebox/Preview Content\"";
 				DEVELOPMENT_TEAM = P2Q7LG69J2;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -597,7 +579,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.jaysce.Jukebox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -633,6 +615,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E80AD61B27859020001FC303 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = exactVersion;
+				version = 1.27.1;
+			};
+		};
 		E84A17362728E6F1005F8CB4 /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/PromiseKit";
@@ -652,6 +642,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E80AD61C27859020001FC303 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E80AD61B27859020001FC303 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
 		E84A17372728E6F1005F8CB4 /* PromiseKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E84A17362728E6F1005F8CB4 /* XCRemoteSwiftPackageReference "PromiseKit" */;

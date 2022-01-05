@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Sparkle
 
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
@@ -68,10 +69,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         aboutMenuItem.view = hostedAboutView
         statusBarMenu.addItem(aboutMenuItem)
         statusBarMenu.addItem(NSMenuItem.separator())
-        statusBarMenu.addItem(
-            withTitle: "Check for updates...",
-            action: nil,
+        let updates = NSMenuItem(
+            title: "Check for updates...",
+            action: #selector(SUUpdater.checkForUpdates(_:)),
             keyEquivalent: "")
+        updates.target = SUUpdater.shared()
+        statusBarMenu.addItem(updates)
         statusBarMenu.addItem(
             withTitle: "Preferences...",
             action: #selector(openPreferencesWindow),

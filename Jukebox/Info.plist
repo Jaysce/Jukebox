@@ -4,7 +4,9 @@
 <dict>
 	<key>LSUIElement</key>
 	<true/>
-	<key>NSAppleEventsUsageDescription</key>
-	<string>Jukebox needs this permission to control Spotify and display song information</string>
+	<key>SUFeedURL</key>
+	<string>https://s3.amazonaws.com/dev.jaysce.jukebox/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>eDkdnKWaZWZdQ3sGFiSOhwoaNDZKUEwg1aE6CZNl4Q8=</string>
 </dict>
 </plist>
