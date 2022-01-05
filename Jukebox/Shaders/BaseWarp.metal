@@ -117,7 +117,7 @@ kernel void warp(texture2d<float, access::write> output [[texture(0)]],
     
     
     
-    float t = time * 0.5;
+    float t = time * 0.8;
     
     
     float shade = pattern(uv, t);

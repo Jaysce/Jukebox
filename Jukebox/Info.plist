@@ -5,6 +5,6 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>Required to interact with Spotify or Apple Music</string>
+	<string>Jukebox needs this permission to control Spotify and display song information</string>
 </dict>
 </plist>
