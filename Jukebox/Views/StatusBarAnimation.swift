@@ -64,8 +64,12 @@ class StatusBarAnimation: NSView {
             bar.cornerRadius = 1
             bar.cornerCurve = .continuous
             bar.anchorPoint = .zero
-            bar.frame = CGRect(x: Double(i) * 3.5, y: (menubarHeight / 2) - 5, width: 2.0, height: isPlaying ? barHeights[i] : 2.0)
+            bar.frame = CGRect(x: isPlaying ? Double(i) * 3.5 : Double(i) * 8, y: (menubarHeight / 2) - 5, width: isPlaying ? 2.0 : 6.0, height: isPlaying ? barHeights[i] : 10.0)
             self.layer?.addSublayer(bar)
+            
+            // Return early if not playing music
+            if !isPlaying && i == 1 { return }
+            if !isPlaying { continue }
             
             let animation = CABasicAnimation(keyPath: #keyPath(CALayer.bounds))
             animation.fromValue = bar.bounds

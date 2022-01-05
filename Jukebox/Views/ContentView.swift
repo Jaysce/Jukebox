@@ -44,10 +44,7 @@ struct ContentView: View {
             
             if !contentViewVM.spotifyApp.isRunning {
                 Text("Play something on \(Constants.Spotify.name)")
-                    .foregroundColor(
-                        visualizerStyle != .none
-                        ? .white.opacity(secondaryOpacity)
-                        : .primary.opacity(secondaryOpacity))
+                    .foregroundColor(.primary.opacity(secondaryOpacity))
                     .font(.system(size: 24, weight: .bold))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .multilineTextAlignment(.center)
