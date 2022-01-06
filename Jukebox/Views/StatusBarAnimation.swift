@@ -13,6 +13,7 @@ class StatusBarAnimation: NSView {
     // Invalidating Variables
     var menubarIsDarkAppearance: Bool {
         didSet {
+            animate()
             self.needsDisplay = true
         }
     }
@@ -61,7 +62,7 @@ class StatusBarAnimation: NSView {
         for i in 0..<barHeights.count {
             let bar = CALayer()
             bar.backgroundColor = backgroundColor
-            bar.cornerRadius = 1
+            bar.cornerRadius = isPlaying ? 1 : 2
             bar.cornerCurve = .continuous
             bar.anchorPoint = .zero
             bar.frame = CGRect(x: isPlaying ? Double(i) * 3.5 : Double(i) * 8, y: (menubarHeight / 2) - 5, width: isPlaying ? 2.0 : 6.0, height: isPlaying ? barHeights[i] : 10.0)
