@@ -41,7 +41,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     // MARK: - Setup
     
-    func setupContentView() {
+    private func setupContentView() {
         let frameSize = NSSize(width: 272, height: 350)
         
         // Initialize ContentView
@@ -59,7 +59,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         popover.contentViewController?.view.window?.makeKey()
     }
     
-    func setupStatusBar() {
+    private func setupStatusBar() {
         // Initialize Status Bar Menu
         statusBarMenu = NSMenu()
         statusBarMenu.delegate = self
@@ -77,7 +77,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         statusBarMenu.addItem(updates)
         statusBarMenu.addItem(
             withTitle: "Preferences...",
-            action: #selector(openPreferencesWindow),
+            action: #selector(showPreferences),
             keyEquivalent: "")
         statusBarMenu.addItem(
             withTitle: "Quit Jukebox",
@@ -120,7 +120,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             context: nil)
     }
     
-    // MARK: - Handlers
+    // MARK: - Status Bar Handlers
     
     // Handle left or right click of Status Bar Item
     @objc func didClickStatusBarItem(_ sender: AnyObject?) {
@@ -199,21 +199,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     }
     
-    // Open the preferences window
-    @objc func openPreferencesWindow(_ sender: AnyObject?) {
-        
-        if preferencesWindow == nil {
-            preferencesWindow = PreferencesWindow()
-            let hostedPrefView = NSHostingView(rootView: PreferencesView(parentWindow: preferencesWindow))
-            preferencesWindow.contentView = hostedPrefView
-        }
-        
-        preferencesWindow.center()
-        preferencesWindow.makeKeyAndOrderFront(nil)
-        NSApplication.shared.activate(ignoringOtherApps: true)
-        
-    }
-    
     // Called when the status bar appearance is changed to update bar animation color and marquee text color
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
@@ -239,6 +224,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
     }
     
+    // MARK: - Window Handlers
+    
+    // Open the preferences window
+    @objc func showPreferences(_ sender: AnyObject?) {
+        
+        if preferencesWindow == nil {
+            preferencesWindow = PreferencesWindow()
+            let hostedPrefView = NSHostingView(rootView: PreferencesView(parentWindow: preferencesWindow))
+            preferencesWindow.contentView = hostedPrefView
+        }
+        
+        preferencesWindow.center()
+        preferencesWindow.makeKeyAndOrderFront(nil)
+        NSApplication.shared.activate(ignoringOtherApps: true)
+        
+    }
+    
+    // Open the onboarding window
     private func showOnboarding() {
         if onboardingWindow == nil {
             onboardingWindow = OnboardingWindow()
@@ -251,6 +254,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         NSApplication.shared.activate(ignoringOtherApps: true)
     }
     
+    // Close the onboarding window
     @objc func finishOnboarding(_ sender: AnyObject) {
         setupContentView()
         setupStatusBar()
