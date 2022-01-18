@@ -73,7 +73,7 @@ struct OnboardingView: View {
     }
     
     private func promptUserForConsent(for appBundleID: String) -> Bool {
-        let target = NSAppleEventDescriptor(bundleIdentifier: Constants.Spotify.bundleID)
+        let target = NSAppleEventDescriptor(bundleIdentifier: appBundleID)
         let status = AEDeterminePermissionToAutomateTarget(target.aeDesc, typeWildCard, typeWildCard, true)
         
         switch status {

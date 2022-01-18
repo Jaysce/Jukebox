@@ -15,7 +15,7 @@ struct PreferencesView: View {
     @AppStorage("visualizerStyle") private var visualizerStyle = VisualizerStyle.albumArt.rawValue
     @AppStorage("swipeToSeek") private var swipeToSeek = false
         
-    private var visualizers = ["None", "Artwork"]
+    private let visualizers = VisualizerStyle.visualizers
     
     init(parentWindow: PreferencesWindow) {
         self.parentWindow = parentWindow
@@ -108,7 +108,6 @@ struct PreferencesView: View {
                     .font(.title2)
                     .fontWeight(.semibold)
                 LaunchAtLogin.Toggle()
-//                Toggle("Swipe to seek on trackpad (Experimental)", isOn: $swipeToSeek) Shelved for now
             }
             .padding()
             

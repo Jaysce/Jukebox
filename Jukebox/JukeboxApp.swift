@@ -11,6 +11,7 @@ import Sparkle
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
+    @StateObject var contentViewVM = ContentViewModel()
     private var statusBarItem: NSStatusItem!
     private var statusBarMenu: NSMenu!
     private var popover: NSPopover!
@@ -45,7 +46,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let frameSize = NSSize(width: 272, height: 350)
         
         // Initialize ContentView
-        @StateObject var contentViewVM = ContentViewModel()
         let hostedContentView = NSHostingView(rootView: ContentView(contentViewVM: contentViewVM))
         hostedContentView.frame = NSRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
         
