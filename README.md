@@ -26,8 +26,9 @@ The app shows the currently playing song in the menu bar. Clicking the menu bar 
   <img src="Images/preferences.png" width="500">
 </p>
 
-The background that appears behind the album art can be changed in preferences.
+The background that appears behind the album art can be changed in preferences, which can be opened from the menu that appears when right clicking the menu bar item.
 
 ## Attributions
 - This project uses [Sparkle](https://sparkle-project.org) for update delivery
 - This project makes use of [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin)
+- Basewarp shader written by [trinketMage](https://www.shadertoy.com/view/tdG3Rd)

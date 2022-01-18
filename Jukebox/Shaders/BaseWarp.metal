@@ -86,13 +86,6 @@ float pattern( float2 p, float time )
     return fbm( p + fbm( p + fbm( p, time ), time ), time );
 }
 
-//void mainImage( out vec4 fragColor, in vec2 fragCoord )
-//{
-//    vec2 uv = fragCoord/iResolution.x;
-//    float shade = pattern(uv);
-//    fragColor = vec4(colormap(shade).rgb, shade);
-//}
-
 kernel void warp(texture2d<float, access::write> output [[texture(0)]],
                     constant float &time [[buffer(0)]],
                     uint2 gid [[thread_position_in_grid]]) {
@@ -106,41 +99,10 @@ kernel void warp(texture2d<float, access::write> output [[texture(0)]],
     // Normalise the coordinates so x and y is in range 0 to 1
     float2 uv = fragCoord / iResolution.x;
     
-    // Shift the range of coordinates to -0.5 to 0.5 to center the origin
-//    uv -= 0.5;
-    
-    // Normalise ratio so image isn't stretched
-//    uv.x *= iResolution.x / iResolution.y;
-    
-    // Scales the texture
-//    uv *= 0.5;
-    
-    
-    
     float t = time * 0.8;
     
-    
     float shade = pattern(uv, t);
-    
     
     output.write(float4(colormap((shade)).rgb, 1), gid);
     
 }
-
-//
-
-
-//
-//
-
-//
-
-//
-
-
-//
-
-//
-
-//
-
