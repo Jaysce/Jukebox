@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Images/icon.png" width="300">
+  <img src="Images/icon.png" width="350">
 </p>
 
 
@@ -11,6 +11,7 @@ Jukebox is a macOS application that allows you to display and control the curren
 **Jukebox requires macOS 11 Big Sur or greater.**
 
 ## Install
+[Download](https://github.com/Jaysce/Jukebox/releases/download/v0.9.3/Jukebox.0.9.3.dmg)
 
 ## Usage
 
@@ -22,7 +23,7 @@ Jukebox is a macOS application that allows you to display and control the curren
 The app shows the currently playing song in the menu bar. Clicking the menu bar item will present a window displaying details of the current track. Hovering over the album art gives you controls.
 
 <p align="center">
-  <img src="Images/preferences.png" width="400">
+  <img src="Images/preferences.png" width="500">
 </p>
 
 The background that appears behind the album art can be changed in preferences.
