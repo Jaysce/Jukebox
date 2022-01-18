@@ -18,12 +18,6 @@ struct ContentView: View {
     // States for animations
     @State private var isShowingPlaybackControls = false
     
-    /* Currently not being used, Lyrics has been shelved for now
-    @State private var showingLyrics = false
-    @State private var playbackScale = 1.0
-    @State private var lyricsScale = 1.2
-     */
-    
     // Constants
     let primaryOpacity = 0.8
     let primaryOpacity2 = 0.6
