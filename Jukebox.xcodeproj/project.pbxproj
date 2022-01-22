@@ -17,8 +17,12 @@
 		E87F08C22782E2AC00742DA1 /* BaseWarp.metal in Sources */ = {isa = PBXBuildFile; fileRef = E87F08C12782E2AC00742DA1 /* BaseWarp.metal */; };
 		E88441BE272D3A4C00C7B650 /* String+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88441BD272D3A4C00C7B650 /* String+Dimensions.swift */; };
 		E892FE0D272E878600359A64 /* StatusBarAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E892FE0C272E878600359A64 /* StatusBarAnimation.swift */; };
+		E89C3499279B71E6000897F0 /* NSImage+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89C3498279B71E6000897F0 /* NSImage+Empty.swift */; };
 		E8A013DD272AB20900B25B63 /* Gradient.metal in Sources */ = {isa = PBXBuildFile; fileRef = E8A013DC272AB20900B25B63 /* Gradient.metal */; };
 		E8A013DF272AB23500B25B63 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A013DE272AB23500B25B63 /* MetalView.swift */; };
+		E8A337182797D59E0094A6D7 /* MusicApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A337172797D59E0094A6D7 /* MusicApplication.swift */; };
+		E8A3371A2797D5F70094A6D7 /* ConnectedApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A337192797D5F70094A6D7 /* ConnectedApps.swift */; };
+		E8A3371C2798258C0094A6D7 /* UserDefaults+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A3371B2798258C0094A6D7 /* UserDefaults+Keys.swift */; };
 		E8AF5FC5272924AC00AACF65 /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AF5FC4272924AC00AACF65 /* String+Base64.swift */; };
 		E8D7CCCC273AA1BC006179D7 /* SpotifyApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D7CCCB273AA1BC006179D7 /* SpotifyApplication.swift */; };
 		E8E00584272FFC8000D8AE1B /* NSAttributedString+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E00583272FFC8000D8AE1B /* NSAttributedString+Dimensions.swift */; };
@@ -45,8 +49,12 @@
 		E87F08C12782E2AC00742DA1 /* BaseWarp.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = BaseWarp.metal; sourceTree = "<group>"; };
 		E88441BD272D3A4C00C7B650 /* String+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Dimensions.swift"; sourceTree = "<group>"; };
 		E892FE0C272E878600359A64 /* StatusBarAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarAnimation.swift; sourceTree = "<group>"; };
+		E89C3498279B71E6000897F0 /* NSImage+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Empty.swift"; sourceTree = "<group>"; };
 		E8A013DC272AB20900B25B63 /* Gradient.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Gradient.metal; sourceTree = "<group>"; };
 		E8A013DE272AB23500B25B63 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
+		E8A337172797D59E0094A6D7 /* MusicApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicApplication.swift; sourceTree = "<group>"; };
+		E8A337192797D5F70094A6D7 /* ConnectedApps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedApps.swift; sourceTree = "<group>"; };
+		E8A3371B2798258C0094A6D7 /* UserDefaults+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Keys.swift"; sourceTree = "<group>"; };
 		E8AF5FC4272924AC00AACF65 /* String+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Base64.swift"; sourceTree = "<group>"; };
 		E8D7CCCB273AA1BC006179D7 /* SpotifyApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyApplication.swift; sourceTree = "<group>"; };
 		E8E00583272FFC8000D8AE1B /* NSAttributedString+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Dimensions.swift"; sourceTree = "<group>"; };
@@ -93,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				E8D7CCCB273AA1BC006179D7 /* SpotifyApplication.swift */,
+				E8A337172797D59E0094A6D7 /* MusicApplication.swift */,
 			);
 			path = ScriptingBridge;
 			sourceTree = "<group>";
@@ -179,6 +188,7 @@
 			children = (
 				E8F5724427167CAF00C5DF9C /* Track.swift */,
 				E82271C2273567F000D1795D /* VisualizerStyle.swift */,
+				E8A337192797D5F70094A6D7 /* ConnectedApps.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -190,6 +200,8 @@
 				E8AF5FC4272924AC00AACF65 /* String+Base64.swift */,
 				E88441BD272D3A4C00C7B650 /* String+Dimensions.swift */,
 				E8E00583272FFC8000D8AE1B /* NSAttributedString+Dimensions.swift */,
+				E8A3371B2798258C0094A6D7 /* UserDefaults+Keys.swift */,
+				E89C3498279B71E6000897F0 /* NSImage+Empty.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -315,16 +327,20 @@
 				E82271C3273567F000D1795D /* VisualizerStyle.swift in Sources */,
 				E87F08BE2782E0CC00742DA1 /* OnboardingWindow.swift in Sources */,
 				E8F57242271678C800C5DF9C /* PressButtonStyle.swift in Sources */,
+				E8A337182797D59E0094A6D7 /* MusicApplication.swift in Sources */,
 				E8F5722D27166E0D00C5DF9C /* ContentView.swift in Sources */,
 				E8FB63F6272BC7BD006F28B8 /* VisualEffectView.swift in Sources */,
+				E89C3499279B71E6000897F0 /* NSImage+Empty.swift in Sources */,
 				E8F572402716785700C5DF9C /* ChipStyle.swift in Sources */,
 				E8F5722B27166E0D00C5DF9C /* JukeboxApp.swift in Sources */,
 				E87F08C02782E18600742DA1 /* OnboardingView.swift in Sources */,
 				E82271BC2735514400D1795D /* Constants.swift in Sources */,
+				E8A3371A2797D5F70094A6D7 /* ConnectedApps.swift in Sources */,
 				E8D7CCCC273AA1BC006179D7 /* SpotifyApplication.swift in Sources */,
 				E8E00584272FFC8000D8AE1B /* NSAttributedString+Dimensions.swift in Sources */,
 				E88441BE272D3A4C00C7B650 /* String+Dimensions.swift in Sources */,
 				E8F5723D2716760E00C5DF9C /* ContentViewModel.swift in Sources */,
+				E8A3371C2798258C0094A6D7 /* UserDefaults+Keys.swift in Sources */,
 				E8AF5FC5272924AC00AACF65 /* String+Base64.swift in Sources */,
 				E8A013DD272AB20900B25B63 /* Gradient.metal in Sources */,
 				E8A013DF272AB23500B25B63 /* MetalView.swift in Sources */,

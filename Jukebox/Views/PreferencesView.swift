@@ -12,10 +12,13 @@ struct PreferencesView: View {
     
     private weak var parentWindow: PreferencesWindow!
     
-    @AppStorage("visualizerStyle") private var visualizerStyle = VisualizerStyle.albumArt.rawValue
-    @AppStorage("swipeToSeek") private var swipeToSeek = false
-        
-    private let visualizers = VisualizerStyle.visualizers
+    @AppStorage("visualizerStyle") private var visualizerStyle = VisualizerStyle.albumArt
+    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
+    @State private var showingPopover = false
+
+    private var name: Text {
+        Text(connectedApp.localizedName)
+    }
     
     init(parentWindow: PreferencesWindow) {
         self.parentWindow = parentWindow
@@ -69,7 +72,7 @@ struct PreferencesView: View {
                     .frame(width: 40, height: 40)
                 VStack(alignment: .leading) {
                     Text("Jukebox").font(.headline)
-                    Text("Version \(Constants.AppInfo.appVersion ?? "?")")
+                    Text("Version \(Constants.AppInfo.appVersion ?? "?") (dev)")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -108,6 +111,29 @@ struct PreferencesView: View {
                     .font(.title2)
                     .fontWeight(.semibold)
                 LaunchAtLogin.Toggle()
+                HStack {
+                    Picker("Connect Jukebox to: ", selection: $connectedApp) {
+                        ForEach(ConnectedApps.allCases, id: \.self) { value in
+                            Text(value.localizedName).tag(value)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    Button {
+                        showingPopover = true
+                    } label: {
+                        Image(systemName: "questionmark.circle")
+                    }
+                    .buttonStyle(.borderless)
+                    .popover(isPresented: $showingPopover) {
+                        Text("If an alert doesn't show to connect \(name) after trying to play a song, please go to System Preferences > Security & Privacy > Privacy > Automation, and check \(name) under Jukebox")
+                            .font(.caption2)
+                            .multilineTextAlignment(.center)
+                            .frame(width: 180, height: 80)
+                            .padding()
+                    }
+
+                }
+                
             }
             .padding()
             
@@ -119,12 +145,9 @@ struct PreferencesView: View {
                     .font(.title2)
                     .fontWeight(.semibold)
                 Picker("Style", selection: $visualizerStyle) {
-                    ForEach(0..<visualizers.count) { index in
-                        Text(visualizers[index]).tag(index)
+                    ForEach(VisualizerStyle.allCases, id: \.self) { value in
+                        Text(value.localizedName).tag(value)
                     }
-                }
-                .onChange(of: visualizerStyle) { val in
-                    visualizerStyle = val
                 }
             }
             .padding()

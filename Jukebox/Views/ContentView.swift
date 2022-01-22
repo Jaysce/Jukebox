@@ -27,7 +27,7 @@ struct ContentView: View {
     var body: some View {
         
         ZStack {
-            if visualizerStyle == .albumArt && contentViewVM.spotifyApp.isRunning {
+            if visualizerStyle == .albumArt && contentViewVM.isRunning {
                 Image(nsImage: contentViewVM.track.albumArt)
                     .resizable()
                     .scaledToFill()
@@ -36,8 +36,8 @@ struct ContentView: View {
                     .padding(-12)
             }
             
-            if !contentViewVM.spotifyApp.isRunning {
-                Text("Play something on \(Constants.Spotify.name)")
+            if !contentViewVM.isRunning {
+                Text("Play something on \(contentViewVM.name)")
                     .foregroundColor(.primary.opacity(secondaryOpacity))
                     .font(.system(size: 24, weight: .bold))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -135,9 +135,6 @@ struct ContentView: View {
                 .padding()
             }
         }
-        .onAppear(perform: {
-            contentViewVM.playStateOrTrackDidChange(nil)
-        })
         .onReceive(contentViewVM.timer) { _ in
             contentViewVM.getCurrentSeekerPosition()
         }

@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
 
-enum VisualizerStyle: Int {
-    case none = 0
-    case albumArt = 1
+enum VisualizerStyle: String, Equatable, CaseIterable {
+    case none = "None"
+    case albumArt = "Artwork"
     
-    static let visualizers = ["None", "Artwork"]
+    var localizedName: LocalizedStringKey { LocalizedStringKey(rawValue) }
 }
