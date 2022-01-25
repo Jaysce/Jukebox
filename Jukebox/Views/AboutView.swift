@@ -19,7 +19,7 @@ struct AboutView: View {
             }
             VStack(alignment: .leading) {
                 Text("Jukebox").font(.title).fontWeight(.bold)
-                Text("Version \(Constants.AppInfo.appVersion ?? "?") (dev)")
+                Text("Version \(Constants.AppInfo.appVersion ?? "?")")
                     .foregroundColor(.secondary)
             }
             Spacer()

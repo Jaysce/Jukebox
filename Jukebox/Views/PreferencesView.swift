@@ -72,7 +72,7 @@ struct PreferencesView: View {
                     .frame(width: 40, height: 40)
                 VStack(alignment: .leading) {
                     Text("Jukebox").font(.headline)
-                    Text("Version \(Constants.AppInfo.appVersion ?? "?") (dev)")
+                    Text("Version \(Constants.AppInfo.appVersion ?? "?")")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -112,7 +112,7 @@ struct PreferencesView: View {
                     .fontWeight(.semibold)
                 LaunchAtLogin.Toggle()
                 HStack {
-                    Picker("Connect Jukebox to: ", selection: $connectedApp) {
+                    Picker("Connect Jukebox to", selection: $connectedApp) {
                         ForEach(ConnectedApps.allCases, id: \.self) { value in
                             Text(value.localizedName).tag(value)
                         }
