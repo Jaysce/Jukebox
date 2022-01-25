@@ -134,7 +134,9 @@ class ContentViewModel: ObservableObject {
                         print(error!.localizedDescription)
                         return
                     }
-                    self?.track.albumArt = NSImage(data: data) ?? NSImage()
+                    DispatchQueue.main.async {
+                        self?.track.albumArt = NSImage(data: data) ?? NSImage()
+                    }
                     
                 }.resume()
             }
