@@ -14,7 +14,9 @@ struct PreferencesView: View {
     
     @AppStorage("visualizerStyle") private var visualizerStyle = VisualizerStyle.albumArt
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
-    @State private var showingPopover = false
+    @State private var alertTitle = Text("Title")
+    @State private var alertMessage = Text("Message")
+    @State private var showingAlert = false
 
     private var name: Text {
         Text(connectedApp.localizedName)
@@ -119,19 +121,29 @@ struct PreferencesView: View {
                     }
                     .pickerStyle(.segmented)
                     Button {
-                        showingPopover = true
+                        let consent = Helper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
+                        switch consent {
+                        case .closed:
+                            alertTitle = Text("\(name) is not open")
+                            alertMessage = Text("Please open \(name) to enable permissions")
+                        case .granted:
+                            alertTitle = Text("Permission granted for \(name)")
+                            alertMessage = Text("Start playing a song!")
+                        case .notPrompted:
+                            return
+                        case .denied:
+                            alertTitle = Text("Permission denied")
+                            alertMessage = Text("Please go to System Preferences > Security & Privacy > Privacy > Automation, and check \(name) under Jukebox")
+                        }
+                        showingAlert = true
                     } label: {
-                        Image(systemName: "questionmark.circle")
+                        Image(systemName: "person.fill.questionmark")
                     }
                     .buttonStyle(.borderless)
-                    .popover(isPresented: $showingPopover) {
-                        Text("If an alert doesn't show to connect \(name) after trying to play a song, please go to System Preferences > Security & Privacy > Privacy > Automation, and check \(name) under Jukebox")
-                            .font(.caption2)
-                            .multilineTextAlignment(.center)
-                            .frame(width: 180, height: 80)
-                            .padding()
+                    .alert(isPresented: $showingAlert) {
+                        Alert(title: alertTitle, message: alertMessage, dismissButton: .default(Text("Got it!")))
                     }
-
+                    
                 }
                 
             }

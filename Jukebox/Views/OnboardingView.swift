@@ -13,8 +13,9 @@ struct OnboardingView: View {
 
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
-    @State private var showingAppNotOpenAlert = false
-    @State private var showingUserDeniedPermissionAlert = false
+    @State private var alertTitle = Text("Title")
+    @State private var alertMessage = Text("Message")
+    @State private var showingAlert = false
     @State private var onAppPicker = true
     @State private var continueDisabled = true
     
@@ -41,15 +42,12 @@ struct OnboardingView: View {
                             .offset(x: onAppPicker ? 0 : -20)
                             .opacity(onAppPicker ? 1 : 0)
                             .animation(.spring(), value: onAppPicker)
-                            .alert(isPresented: $showingAppNotOpenAlert) {
-                                Alert(title: Text("\(name) is not open"), message: Text("Please open \(name) to enable permissions"), dismissButton: .default(Text("Got it!")))
-                            }
                         details
                             .offset(x: onAppPicker ? 20 : 0)
                             .opacity(onAppPicker ? 0 : 1)
                             .animation(.spring(), value: onAppPicker)
-                            .alert(isPresented: $showingUserDeniedPermissionAlert) {
-                                Alert(title: Text("Permission denied"), message: Text("Please go to System Preferences > Security & Privacy > Privacy > Automation, and check \(name) under Jukebox"), dismissButton: .default(Text("Got it!")))
+                            .alert(isPresented: $showingAlert) {
+                                Alert(title: alertTitle, message: alertMessage, dismissButton: .default(Text("Got it!")))
                     }
                     .disabled(!continueDisabled)
                     
@@ -105,33 +103,24 @@ struct OnboardingView: View {
                 .font(.caption2)
                 .multilineTextAlignment(.center)
             Button("Enable permissions") {
-                _ = promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
+                let consent = Helper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
+                switch consent {
+                case .closed:
+                    alertTitle = Text("\(name) is not open")
+                    alertMessage = Text("Please open \(name) to enable permissions")
+                case .granted:
+                    continueDisabled.toggle()
+                    viewedOnboarding = true
+                    return
+                case .notPrompted:
+                    return
+                case .denied:
+                    alertTitle = Text("Permission denied")
+                    alertMessage = Text("Please go to System Preferences > Security & Privacy > Privacy > Automation, and check \(name) under Jukebox")
+                }
+                showingAlert = true
             }
         }
         
-    }
-    
-    private func promptUserForConsent(for appBundleID: String) -> Bool {
-        let target = NSAppleEventDescriptor(bundleIdentifier: appBundleID)
-        let status = AEDeterminePermissionToAutomateTarget(target.aeDesc, typeWildCard, typeWildCard, true)
-        
-        switch status {
-        case -600:
-            print("The application with BundleID: \(appBundleID) is not open.")
-            showingAppNotOpenAlert = true
-            return false
-        case -0:
-            print("Permissions granted for the application with BundleID: \(appBundleID).")
-            continueDisabled.toggle()
-            viewedOnboarding = true
-            return true
-        case -1744:
-            print("User consent required but not prompted for the application with BundleID: \(appBundleID).")
-            return false
-        default:
-            print("The user has declined permission for the application with BundleID: \(appBundleID).")
-            showingUserDeniedPermissionAlert = true
-            return false
-        }
     }
 }

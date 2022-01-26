@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E800A8B22732811D00DBDF0E /* MenuMarqueeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800A8B12732811D00DBDF0E /* MenuMarqueeText.swift */; };
 		E80AD61D27859020001FC303 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = E80AD61C27859020001FC303 /* Sparkle */; };
+		E81CFEC227A12ED60030C448 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81CFEC127A12ED60030C448 /* Helper.swift */; };
 		E82271BC2735514400D1795D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82271BB2735514400D1795D /* Constants.swift */; };
 		E82271C3273567F000D1795D /* VisualizerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82271C2273567F000D1795D /* VisualizerStyle.swift */; };
 		E8767C66273688FB00E39D17 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = E8767C65273688FB00E39D17 /* LaunchAtLogin */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		E800A8B12732811D00DBDF0E /* MenuMarqueeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuMarqueeText.swift; sourceTree = "<group>"; };
+		E81CFEC127A12ED60030C448 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		E82271BB2735514400D1795D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E82271C2273567F000D1795D /* VisualizerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualizerStyle.swift; sourceTree = "<group>"; };
 		E87F08BD2782E0CC00742DA1 /* OnboardingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindow.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				E82271BB2735514400D1795D /* Constants.swift */,
+				E81CFEC127A12ED60030C448 /* Helper.swift */,
 				E8AF5FC4272924AC00AACF65 /* String+Base64.swift */,
 				E88441BD272D3A4C00C7B650 /* String+Dimensions.swift */,
 				E8E00583272FFC8000D8AE1B /* NSAttributedString+Dimensions.swift */,
@@ -336,6 +339,7 @@
 				E87F08C02782E18600742DA1 /* OnboardingView.swift in Sources */,
 				E82271BC2735514400D1795D /* Constants.swift in Sources */,
 				E8A3371A2797D5F70094A6D7 /* ConnectedApps.swift in Sources */,
+				E81CFEC227A12ED60030C448 /* Helper.swift in Sources */,
 				E8D7CCCC273AA1BC006179D7 /* SpotifyApplication.swift in Sources */,
 				E8E00584272FFC8000D8AE1B /* NSAttributedString+Dimensions.swift in Sources */,
 				E88441BE272D3A4C00C7B650 /* String+Dimensions.swift in Sources */,
