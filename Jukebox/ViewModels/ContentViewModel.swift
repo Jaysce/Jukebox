@@ -13,15 +13,15 @@ class ContentViewModel: ObservableObject {
     
     // Music Applications
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
-    let spotifyApp: SpotifyApplication = SBApplication(bundleIdentifier: Constants.Spotify.bundleID)!
-    let appleMusicApp: MusicApplication = SBApplication(bundleIdentifier: Constants.AppleMusic.bundleID)!
+    let spotifyApp: SpotifyApplication? = SBApplication(bundleIdentifier: Constants.Spotify.bundleID)
+    let appleMusicApp: MusicApplication? = SBApplication(bundleIdentifier: Constants.AppleMusic.bundleID)
     
     var name: String {
         connectedApp == .spotify ? Constants.Spotify.name : Constants.AppleMusic.name
     }
     
     var isRunning: Bool {
-        connectedApp == .spotify ? spotifyApp.isRunning : appleMusicApp.isRunning
+        connectedApp == .spotify ? spotifyApp?.isRunning ?? false : appleMusicApp?.isRunning ?? false
     }
     
     var notification: String {
@@ -112,8 +112,8 @@ class ContentViewModel: ObservableObject {
     
     private func getPlayState() {
         isPlaying = connectedApp == .spotify
-        ? spotifyApp.playerState == .playing
-        : appleMusicApp.playerState == .playing
+        ? spotifyApp?.playerState == .playing
+        : appleMusicApp?.playerState == .playing
     }
     
     func getTrackInformation() {
@@ -124,10 +124,10 @@ class ContentViewModel: ObservableObject {
         case .spotify:
             
             // Track
-            self.track.title = spotifyApp.currentTrack?.name ?? "Unknown Title"
-            self.track.artist = spotifyApp.currentTrack?.artist ?? "Unknown Artist"
-            self.track.album = spotifyApp.currentTrack?.album ?? "Unknown Album"
-            if let artworkURLString = spotifyApp.currentTrack?.artworkUrl,
+            self.track.title = spotifyApp?.currentTrack?.name ?? "Unknown Title"
+            self.track.artist = spotifyApp?.currentTrack?.artist ?? "Unknown Artist"
+            self.track.album = spotifyApp?.currentTrack?.album ?? "Unknown Album"
+            if let artworkURLString = spotifyApp?.currentTrack?.artworkUrl,
                let url = URL(string: artworkURLString) {
                 URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
                     guard let data = data, error == nil else {
@@ -142,20 +142,20 @@ class ContentViewModel: ObservableObject {
             }
             
             // Seeker
-            self.trackDuration = Double(spotifyApp.currentTrack?.duration ?? 0) / 1000
+            self.trackDuration = Double(spotifyApp?.currentTrack?.duration ?? 0) / 1000
             
         case .appleMusic:
             
             // Track
-            self.track.title = appleMusicApp.currentTrack?.name ?? "Unknown Title"
-            self.track.artist = appleMusicApp.currentTrack?.artist ?? "Unknown Artist"
-            self.track.album = appleMusicApp.currentTrack?.album ?? "Unknown Album"
+            self.track.title = appleMusicApp?.currentTrack?.name ?? "Unknown Title"
+            self.track.artist = appleMusicApp?.currentTrack?.artist ?? "Unknown Artist"
+            self.track.album = appleMusicApp?.currentTrack?.album ?? "Unknown Album"
             
             // Might have to change this later...
             var count = 0
             var waitForData: (() -> Void)!
             waitForData = {
-                let art = self.appleMusicApp.currentTrack?.artworks?()[0] as! MusicArtwork
+                let art = self.appleMusicApp?.currentTrack?.artworks?()[0] as! MusicArtwork
                 if art.data != nil && !art.data!.isEmpty() {
                     self.track.albumArt = art.data!
                 } else {
@@ -169,7 +169,7 @@ class ContentViewModel: ObservableObject {
             waitForData()
             
             // Seeker
-            self.trackDuration = Double(appleMusicApp.currentTrack?.duration ?? 0)
+            self.trackDuration = Double(appleMusicApp?.currentTrack?.duration ?? 0)
             
         }
         
@@ -189,27 +189,27 @@ class ContentViewModel: ObservableObject {
     func togglePlayPause() {
         switch connectedApp {
         case .spotify:
-            spotifyApp.playpause?()
+            spotifyApp?.playpause?()
         case .appleMusic:
-            appleMusicApp.playpause?()
+            appleMusicApp?.playpause?()
         }
     }
     
     func previousTrack() {
         switch connectedApp {
         case .spotify:
-            spotifyApp.previousTrack?()
+            spotifyApp?.previousTrack?()
         case .appleMusic:
-            appleMusicApp.backTrack?()
+            appleMusicApp?.backTrack?()
         }
     }
     
     func nextTrack() {
         switch connectedApp {
         case .spotify:
-            spotifyApp.nextTrack?()
+            spotifyApp?.nextTrack?()
         case .appleMusic:
-            appleMusicApp.nextTrack?()
+            appleMusicApp?.nextTrack?()
         }
     }
     
@@ -218,12 +218,12 @@ class ContentViewModel: ObservableObject {
     func getCurrentSeekerPosition() {
         guard isRunning else { return }
         self.seekerPosition = connectedApp == .spotify
-        ? Double(spotifyApp.playerPosition ?? 0)
-        : Double(appleMusicApp.playerPosition ?? 0)
+        ? Double(spotifyApp?.playerPosition ?? 0)
+        : Double(appleMusicApp?.playerPosition ?? 0)
     }
     
     func seekTrack() {
-        spotifyApp.setPlayerPosition?(seekerPosition)
+        spotifyApp?.setPlayerPosition?(seekerPosition)
     }
     
     func startTimer() {
