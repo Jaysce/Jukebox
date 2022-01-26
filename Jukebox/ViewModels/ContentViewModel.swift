@@ -13,8 +13,8 @@ class ContentViewModel: ObservableObject {
     
     // Music Applications
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
-    let spotifyApp: SpotifyApplication? = SBApplication(bundleIdentifier: Constants.Spotify.bundleID)
-    let appleMusicApp: MusicApplication? = SBApplication(bundleIdentifier: Constants.AppleMusic.bundleID)
+    var spotifyApp: SpotifyApplication?
+    var appleMusicApp: MusicApplication?
     
     var name: String {
         connectedApp == .spotify ? Constants.Spotify.name : Constants.AppleMusic.name
@@ -43,6 +43,7 @@ class ContentViewModel: ObservableObject {
     private var observer: NSKeyValueObservation?
     
     init() {
+        setupMusicApps()
         setupObservers()
         guard isRunning else { return }
         playStateOrTrackDidChange(nil)
@@ -52,7 +53,19 @@ class ContentViewModel: ObservableObject {
         observer?.invalidate()
     }
     
-    // MARK: - Observers
+    // MARK: - Setup
+    
+    private func setupMusicApps() {
+        print("Setting up music apps")
+        switch connectedApp {
+        case .spotify:
+            guard spotifyApp == nil else { return }
+            spotifyApp = SBApplication(bundleIdentifier: Constants.Spotify.bundleID)
+        case .appleMusic:
+            guard appleMusicApp == nil else { return }
+            appleMusicApp = SBApplication(bundleIdentifier: Constants.AppleMusic.bundleID)
+        }
+    }
     
     private func setupObservers() {
         
@@ -64,6 +77,7 @@ class ContentViewModel: ObservableObject {
                 name: NSNotification.Name(rawValue: self.notification),
                 object: nil,
                 suspensionBehavior: .deliverImmediately)
+            self.setupMusicApps()
             self.playStateOrTrackDidChange(nil)
         }
                 
@@ -94,6 +108,7 @@ class ContentViewModel: ObservableObject {
     // MARK: - Notification Handlers
     
     @objc func playStateOrTrackDidChange(_ sender: NSNotification?) {
+        setupMusicApps()
         guard isRunning, sender?.userInfo?["Player State"] as? String != "Stopped" else {
             self.track.title = ""
             self.track.artist = ""

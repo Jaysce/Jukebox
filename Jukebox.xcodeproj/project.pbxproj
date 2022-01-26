@@ -492,7 +492,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Jukebox/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Jukebox needs this permission to control Spotify and display song information";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Jukebox needs this permission to control Spotify or Apple Music and display song information";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -528,7 +528,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Jukebox/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Jukebox needs this permission to control Spotify and display song information";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Jukebox needs this permission to control Spotify or Apple Music and display song information";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
