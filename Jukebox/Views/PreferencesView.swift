@@ -97,7 +97,6 @@ struct PreferencesView: View {
                     Text("Website").font(.system(size: 12))
                 }
                 .buttonStyle(LinkButtonStyle())
-                .disabled(true)
             }
         }
         .padding(.horizontal, 18)
