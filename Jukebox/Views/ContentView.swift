@@ -11,6 +11,7 @@ struct ContentView: View {
     
     // User Defaults
     @AppStorage("visualizerStyle") private var visualizerStyle: VisualizerStyle = .albumArt
+    @AppStorage("connectedApp") private var connectedApp: ConnectedApps = .spotify
     
     // View Model
     @ObservedObject var contentViewVM: ContentViewModel
@@ -65,6 +66,15 @@ struct ContentView: View {
                             
                             // Playback Buttons
                             HStack(spacing: 6) {
+                                if case connectedApp = ConnectedApps.appleMusic {
+                                    Button {
+                                        contentViewVM.toggleLoveTrack()
+                                    } label: {
+                                        Image(systemName: contentViewVM.isLoved ? "heart.fill" : "heart")
+                                            .font(.system(size: 14))
+                                            .foregroundColor(.primary.opacity(primaryOpacity))
+                                    }.pressButtonStyle()
+                                }
                                 Button {
                                     contentViewVM.previousTrack()
                                 } label: {
