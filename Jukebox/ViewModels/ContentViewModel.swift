@@ -34,6 +34,7 @@ class ContentViewModel: ObservableObject {
     // Track
     @Published var track = Track()
     @Published var isPlaying = false
+    @Published var isLoved = false
     
     // Seeker
     @Published var timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
@@ -165,7 +166,7 @@ class ContentViewModel: ObservableObject {
             self.track.title = appleMusicApp?.currentTrack?.name ?? "Unknown Title"
             self.track.artist = appleMusicApp?.currentTrack?.artist ?? "Unknown Artist"
             self.track.album = appleMusicApp?.currentTrack?.album ?? "Unknown Album"
-            
+            self.isLoved = appleMusicApp?.currentTrack?.loved ?? false
             // Might have to change this later...
             var count = 0
             var waitForData: (() -> Void)!
@@ -225,6 +226,18 @@ class ContentViewModel: ObservableObject {
             spotifyApp?.nextTrack?()
         case .appleMusic:
             appleMusicApp?.nextTrack?()
+        }
+    }
+    
+    func toggleLoveTrack() {
+        switch connectedApp {
+        case .appleMusic:
+            if let isLovedTrack = appleMusicApp?.currentTrack?.loved {
+                appleMusicApp?.currentTrack?.setLoved?(!isLovedTrack)
+                self.isLoved = !isLovedTrack
+            }
+        case .spotify:
+            print("Not supported")
         }
     }
     

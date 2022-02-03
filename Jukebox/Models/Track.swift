@@ -12,5 +12,6 @@ struct Track {
     var title = ""
     var artist = ""
     var album = ""
+    var loved = false
     var albumArt = NSImage()
 }
